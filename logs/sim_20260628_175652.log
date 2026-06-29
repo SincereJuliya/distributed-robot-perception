@@ -1,0 +1,18 @@
+# Simulation started at Sun Jun 28 17:56:52 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localization
+[t=   81] MODE               Hazard Localization → Sensor Degradation & Trust
+[t=   81] MODE               exiting Hazard Localization
+[t=   81] MODE               entered Sensor Degradation & Trust
+[t=   81] ROBOT              R2: manual degradation triggered
+[t=   81] ROBOT              R3: manual degradation triggered
+[t=  280] PHASE              MONITOR → LEAK
+[t=  280] LEAK_START         new leak at (400, 170)
+[t=  621] PHASE              LEAK → CONSENSUS
+[t=  630] CONSENSUS          σ=63.3px  obs=1H/3T  stable=0/30  λ₂=1.000
+[t=  640] CONSENSUS          σ=59.7px  obs=1H/3T  stable=0/30  λ₂=1.000
+[t=  650] CONSENSUS          σ=24.8px  obs=2H/4T  stable=3/30  λ₂=1.000
+[t=  660] CONSENSUS          σ=16.3px  obs=2H/4T  stable=11/30  λ₂=2.000
+[t=  670] CONSENSUS          σ=12.2px  obs=2H/4T  stable=21/30  λ₂=3.000
+[t=  679] REPORTED           agreed (427, 172) err=27.3px
+[t=  679] PHASE              CONSENSUS → REPORTED

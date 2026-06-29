@@ -1,0 +1,31 @@
+# Simulation started at Wed Jun 24 10:41:18 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localisation
+[t=  199] PHASE              MONITOR → LEAK
+[t=  199] LEAK_START         new leak at (817, 287)
+[t=  200] DETECT             2 smell gas  0 located it  need 3  λ₂=0.000
+[t=  220] DETECT             5 smell gas  1 located it  need 3  λ₂=0.000
+[t=  240] DETECT             5 smell gas  1 located it  need 3  λ₂=0.000
+[t=  260] DETECT             5 smell gas  1 located it  need 3  λ₂=0.000
+[t=  280] DETECT             5 smell gas  1 located it  need 3  λ₂=0.519
+[t=  300] DETECT             5 smell gas  1 located it  need 3  λ₂=0.382
+[t=  320] DETECT             5 smell gas  1 located it  need 3  λ₂=0.000
+[t=  340] DETECT             5 smell gas  1 located it  need 3  λ₂=0.000
+[t=  360] DETECT             5 smell gas  1 located it  need 3  λ₂=0.000
+[t=  380] DETECT             5 smell gas  1 located it  need 3  λ₂=0.000
+[t=  400] DETECT             5 smell gas  1 located it  need 3  λ₂=0.000
+[t=  420] DETECT             5 smell gas  2 located it  need 3  λ₂=0.000
+[t=  440] DETECT             5 smell gas  2 located it  need 3  λ₂=0.519
+[t=  460] DETECT             5 smell gas  2 located it  need 3  λ₂=1.000
+[t=  480] DETECT             5 smell gas  2 located it  need 3  λ₂=0.519
+[t=  500] DETECT             5 smell gas  2 located it  need 3  λ₂=0.519
+[t=  520] DETECT             5 smell gas  2 located it  need 3  λ₂=0.519
+[t=  540] DETECT             5 smell gas  2 located it  need 3  λ₂=0.519
+[t=  560] DETECT             5 smell gas  2 located it  need 3  λ₂=0.000
+[t=  580] DETECT             5 smell gas  2 located it  need 3  λ₂=0.000
+[t=  596] PHASE              LEAK → CONSENSUS
+[t=  600] CONSENSUS          σ=2.3px  obs=3H/3T  stable=4/30  λ₂=0.000
+[t=  610] CONSENSUS          σ=2.3px  obs=3H/3T  stable=14/30  λ₂=0.000
+[t=  620] CONSENSUS          σ=2.3px  obs=3H/3T  stable=24/30  λ₂=0.000
+[t=  626] REPORTED           agreed (807, 277) err=14.6px
+[t=  626] PHASE              CONSENSUS → REPORTED

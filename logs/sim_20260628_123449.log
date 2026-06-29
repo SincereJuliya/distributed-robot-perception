@@ -1,0 +1,47 @@
+# Simulation started at Sun Jun 28 12:34:49 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localisation
+[t=   80] MODE               Hazard Localisation → Sensor Degradation & Trust
+[t=   80] MODE               exiting Hazard Localisation
+[t=   80] MODE               entered Sensor Degradation & Trust
+[t=   80] ROBOT              R2: manual degradation triggered
+[t=   80] ROBOT              R3: manual degradation triggered
+[t=  279] PHASE              MONITOR → LEAK
+[t=  279] LEAK_START         new leak at (815, 276)
+[t=  511] PHASE              LEAK → CONSENSUS
+[t=  520] CONSENSUS          σ=82.1px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  530] CONSENSUS          σ=92.2px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  540] CONSENSUS          σ=89.3px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  550] CONSENSUS          σ=91.9px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  560] CONSENSUS          σ=91.0px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  570] CONSENSUS          σ=86.9px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  580] CONSENSUS          σ=79.8px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  590] CONSENSUS          σ=78.2px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  600] CONSENSUS          σ=70.4px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  610] CONSENSUS          σ=65.5px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  620] CONSENSUS          σ=69.0px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  630] CONSENSUS          σ=69.4px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  640] CONSENSUS          σ=65.6px  obs=1H/3T  stable=0/30  λ₂=0.000
+[t=  650] CONSENSUS          σ=65.8px  obs=1H/3T  stable=0/30  λ₂=0.519
+[t=  660] CONSENSUS          σ=60.7px  obs=1H/3T  stable=0/30  λ₂=0.519
+[t=  670] CONSENSUS          σ=49.2px  obs=1H/3T  stable=0/30  λ₂=2.000
+[t=  680] CONSENSUS          σ=50.2px  obs=1H/3T  stable=0/30  λ₂=2.000
+[t=  690] CONSENSUS          σ=46.5px  obs=1H/3T  stable=0/30  λ₂=2.000
+[t=  700] CONSENSUS          σ=52.1px  obs=1H/3T  stable=0/30  λ₂=2.000
+[t=  710] CONSENSUS          σ=51.1px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  720] CONSENSUS          σ=50.1px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  730] CONSENSUS          σ=47.3px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  740] CONSENSUS          σ=46.1px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  750] CONSENSUS          σ=47.6px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  760] CONSENSUS          σ=42.1px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  770] CONSENSUS          σ=41.9px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  780] CONSENSUS          σ=39.5px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  790] CONSENSUS          σ=43.1px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  800] CONSENSUS          σ=45.2px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  810] CONSENSUS          σ=46.6px  obs=1H/3T  stable=0/30  λ₂=5.000
+[t=  820] CONSENSUS          σ=26.3px  obs=2H/4T  stable=0/30  λ₂=5.000
+[t=  830] CONSENSUS          σ=22.1px  obs=2H/4T  stable=9/30  λ₂=5.000
+[t=  840] CONSENSUS          σ=17.9px  obs=3H/5T  stable=19/30  λ₂=5.000
+[t=  850] CONSENSUS          σ=15.4px  obs=3H/5T  stable=29/30  λ₂=5.000
+[t=  851] REPORTED           agreed (803, 289) err=18.5px
+[t=  851] PHASE              CONSENSUS → REPORTED

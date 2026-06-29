@@ -1,0 +1,49 @@
+# Simulation started at Sun Jun 28 12:31:42 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localisation
+[t=  199] PHASE              MONITOR → LEAK
+[t=  199] LEAK_START         new leak at (762, 491)
+[t=  200] DETECT             1/3 located the leak  λ₂=0.00
+[t=  240] DETECT             1/3 located the leak  λ₂=0.00
+[t=  300] DETECT             1/3 located the leak  λ₂=0.00
+[t=  360] DETECT             1/3 located the leak  λ₂=0.00
+[t=  420] DETECT             1/3 located the leak  λ₂=0.00
+[t=  480] DETECT             1/3 located the leak  λ₂=0.00
+[t=  540] DETECT             1/3 located the leak  λ₂=0.00
+[t=  600] DETECT             1/3 located the leak  λ₂=0.00
+[t=  660] DETECT             1/3 located the leak  λ₂=0.00
+[t=  720] DETECT             1/3 located the leak  λ₂=0.00
+[t=  780] DETECT             1/3 located the leak  λ₂=0.00
+[t=  840] DETECT             1/3 located the leak  λ₂=0.00
+[t=  868] DETECT             2/3 located the leak  λ₂=0.00
+[t=  900] DETECT             2/3 located the leak  λ₂=0.00
+[t=  960] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1020] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1080] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1140] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1200] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1260] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1320] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1380] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1440] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1500] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1560] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1620] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1680] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1740] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1800] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1860] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1920] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1980] DETECT             2/3 located the leak  λ₂=0.00
+[t= 2040] DETECT             2/3 located the leak  λ₂=0.00
+[t= 2100] DETECT             2/3 located the leak  λ₂=0.00
+[t= 2160] DETECT             2/3 located the leak  λ₂=0.00
+[t= 2220] DETECT             2/3 located the leak  λ₂=0.00
+[t= 2280] DETECT             2/3 located the leak  λ₂=0.00
+[t= 2283] DETECT             3/3 located the leak  λ₂=0.00
+[t= 2283] PHASE              LEAK → CONSENSUS
+[t= 2290] CONSENSUS          σ=18.2px  obs=3H/3T  stable=7/30  λ₂=0.000
+[t= 2300] CONSENSUS          σ=16.5px  obs=3H/3T  stable=17/30  λ₂=0.000
+[t= 2310] CONSENSUS          σ=16.8px  obs=3H/3T  stable=27/30  λ₂=0.000
+[t= 2313] REPORTED           agreed (772, 478) err=15.9px
+[t= 2313] PHASE              CONSENSUS → REPORTED

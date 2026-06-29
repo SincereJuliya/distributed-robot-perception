@@ -1,0 +1,99 @@
+# Simulation started at Wed Jun 24 10:14:26 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localisation
+[t=   80] MODE               Hazard Localisation → Sensor Degradation & Trust
+[t=   80] MODE               exiting Hazard Localisation
+[t=   80] MODE               entered Sensor Degradation & Trust
+[t=   80] ROBOT              R2: manual degradation triggered
+[t=  279] PHASE              MONITOR → LEAK
+[t=  279] LEAK_START         new leak at (289, 413)
+[t=  483] PHASE              LEAK → CONSENSUS
+[t=  490] CONSENSUS          σ=0.7px  obs=2H/3T  stable=7/30  λ₂=0.000
+[t=  500] CONSENSUS          σ=0.7px  obs=2H/3T  stable=17/30  λ₂=0.000
+[t=  510] CONSENSUS          σ=0.7px  obs=2H/3T  stable=27/30  λ₂=0.000
+[t=  513] REPORTED           agreed (351, 446) err=71.1px
+[t=  513] PHASE              CONSENSUS → REPORTED
+[t=  734] PHASE              REPORTED → MONITOR
+[t=  934] PHASE              MONITOR → LEAK
+[t=  934] LEAK_START         new leak at (538, 190)
+[t= 1571] PHASE              LEAK → CONSENSUS
+[t= 1580] CONSENSUS          σ=11.7px  obs=3H/3T  stable=9/30  λ₂=0.000
+[t= 1590] CONSENSUS          σ=11.7px  obs=3H/3T  stable=19/30  λ₂=0.000
+[t= 1600] CONSENSUS          σ=11.7px  obs=3H/3T  stable=29/30  λ₂=0.000
+[t= 1601] REPORTED           agreed (573, 210) err=41.1px
+[t= 1601] PHASE              CONSENSUS → REPORTED
+[t= 1822] PHASE              REPORTED → MONITOR
+[t= 2022] PHASE              MONITOR → LEAK
+[t= 2022] LEAK_START         new leak at (753, 512)
+[t= 2235] PHASE              LEAK → CONSENSUS
+[t= 2240] CONSENSUS          σ=0.0px  obs=3H/3T  stable=5/30  λ₂=0.000
+[t= 2250] CONSENSUS          σ=0.0px  obs=3H/3T  stable=15/30  λ₂=0.000
+[t= 2260] CONSENSUS          σ=0.0px  obs=3H/3T  stable=25/30  λ₂=0.000
+[t= 2265] REPORTED           agreed (763, 492) err=22.3px
+[t= 2265] PHASE              CONSENSUS → REPORTED
+[t= 2486] PHASE              REPORTED → MONITOR
+[t= 2686] PHASE              MONITOR → LEAK
+[t= 2686] LEAK_START         new leak at (310, 401)
+[t= 2946] PHASE              LEAK → CONSENSUS
+[t= 2950] CONSENSUS          σ=0.0px  obs=2H/3T  stable=4/30  λ₂=0.000
+[t= 2960] CONSENSUS          σ=0.0px  obs=2H/3T  stable=14/30  λ₂=0.000
+[t= 2970] CONSENSUS          σ=0.0px  obs=2H/3T  stable=24/30  λ₂=0.000
+[t= 2976] REPORTED           agreed (353, 434) err=54.8px
+[t= 2976] PHASE              CONSENSUS → REPORTED
+[t= 3197] PHASE              REPORTED → MONITOR
+[t= 3397] PHASE              MONITOR → LEAK
+[t= 3397] LEAK_START         new leak at (745, 381)
+[t= 3927] PHASE              LEAK → CONSENSUS
+[t= 3930] CONSENSUS          σ=0.0px  obs=2H/3T  stable=3/30  λ₂=0.000
+[t= 3940] CONSENSUS          σ=0.0px  obs=2H/3T  stable=13/30  λ₂=0.000
+[t= 3950] CONSENSUS          σ=0.0px  obs=2H/3T  stable=23/30  λ₂=0.000
+[t= 3957] REPORTED           agreed (736, 402) err=23.2px
+[t= 3957] PHASE              CONSENSUS → REPORTED
+[t= 4178] PHASE              REPORTED → MONITOR
+[t= 4378] PHASE              MONITOR → LEAK
+[t= 4378] LEAK_START         new leak at (401, 349)
+[t= 4521] PHASE              LEAK → CONSENSUS
+[t= 4530] CONSENSUS          σ=0.0px  obs=2H/3T  stable=9/30  λ₂=0.000
+[t= 4540] CONSENSUS          σ=0.0px  obs=2H/3T  stable=19/30  λ₂=0.000
+[t= 4550] CONSENSUS          σ=0.0px  obs=2H/3T  stable=29/30  λ₂=1.000
+[t= 4551] REPORTED           agreed (427, 369) err=32.7px
+[t= 4551] PHASE              CONSENSUS → REPORTED
+[t= 4772] PHASE              REPORTED → MONITOR
+[t= 4972] PHASE              MONITOR → LEAK
+[t= 4972] LEAK_START         new leak at (756, 505)
+[t= 5071] PHASE              LEAK → CONSENSUS
+[t= 5080] CONSENSUS          σ=0.0px  obs=2H/3T  stable=9/30  λ₂=0.000
+[t= 5090] CONSENSUS          σ=0.0px  obs=2H/3T  stable=19/30  λ₂=0.000
+[t= 5100] CONSENSUS          σ=0.0px  obs=2H/3T  stable=29/30  λ₂=0.000
+[t= 5101] REPORTED           agreed (748, 491) err=16.0px
+[t= 5101] PHASE              CONSENSUS → REPORTED
+[t= 5322] PHASE              REPORTED → MONITOR
+[t= 5522] PHASE              MONITOR → LEAK
+[t= 5522] LEAK_START         new leak at (433, 461)
+[t= 6002] PHASE              LEAK → CONSENSUS
+[t= 6010] CONSENSUS          σ=0.0px  obs=3H/4T  stable=8/30  λ₂=1.000
+[t= 6020] CONSENSUS          σ=0.0px  obs=3H/4T  stable=18/30  λ₂=1.000
+[t= 6030] CONSENSUS          σ=0.0px  obs=3H/4T  stable=28/30  λ₂=1.000
+[t= 6032] REPORTED           agreed (437, 466) err=6.9px
+[t= 6032] PHASE              CONSENSUS → REPORTED
+[t= 6253] PHASE              REPORTED → MONITOR
+[t= 6453] PHASE              MONITOR → LEAK
+[t= 6453] LEAK_START         new leak at (486, 86)
+[t= 6939] PHASE              LEAK → CONSENSUS
+[t= 6940] CONSENSUS          σ=0.0px  obs=3H/3T  stable=1/30  λ₂=0.000
+[t= 6950] CONSENSUS          σ=0.0px  obs=3H/3T  stable=11/30  λ₂=0.000
+[t= 6960] CONSENSUS          σ=0.0px  obs=3H/3T  stable=21/30  λ₂=0.000
+[t= 6969] REPORTED           agreed (531, 103) err=48.4px
+[t= 6969] PHASE              CONSENSUS → REPORTED
+[t= 7190] PHASE              REPORTED → MONITOR
+[t= 7390] PHASE              MONITOR → LEAK
+[t= 7390] LEAK_START         new leak at (613, 255)
+[t= 7508] PHASE              LEAK → CONSENSUS
+[t= 7510] CONSENSUS          σ=0.0px  obs=3H/3T  stable=2/30  λ₂=1.000
+[t= 7520] CONSENSUS          σ=0.0px  obs=4H/4T  stable=12/30  λ₂=1.000
+[t= 7530] CONSENSUS          σ=0.0px  obs=4H/4T  stable=22/30  λ₂=2.000
+[t= 7538] REPORTED           agreed (619, 262) err=9.2px
+[t= 7538] PHASE              CONSENSUS → REPORTED
+[t= 7759] PHASE              REPORTED → MONITOR
+[t= 7959] PHASE              MONITOR → LEAK
+[t= 7959] LEAK_START         new leak at (690, 374)

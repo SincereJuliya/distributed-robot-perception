@@ -1,0 +1,8 @@
+# Simulation started at Sat Jun 27 23:25:02 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localisation
+[t=  199] PHASE              MONITOR → LEAK
+[t=  199] LEAK_START         new leak at (515, 125)
+[t=  200] DETECT             0/3 located the leak  λ₂=0.00
+[t=  240] DETECT             0/3 located the leak  λ₂=0.00
+[t=  300] DETECT             0/3 located the leak  λ₂=0.00

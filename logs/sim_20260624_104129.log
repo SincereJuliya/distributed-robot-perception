@@ -1,0 +1,26 @@
+# Simulation started at Wed Jun 24 10:41:29 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localisation
+[t=  199] PHASE              MONITOR → LEAK
+[t=  199] LEAK_START         new leak at (526, 243)
+[t=  200] DETECT             1 smell gas  0 located it  need 3  λ₂=0.000
+[t=  220] DETECT             5 smell gas  0 located it  need 3  λ₂=0.000
+[t=  240] DETECT             5 smell gas  0 located it  need 3  λ₂=0.000
+[t=  260] DETECT             5 smell gas  0 located it  need 3  λ₂=0.000
+[t=  280] DETECT             5 smell gas  0 located it  need 3  λ₂=0.000
+[t=  300] DETECT             5 smell gas  0 located it  need 3  λ₂=0.000
+[t=  320] DETECT             5 smell gas  0 located it  need 3  λ₂=0.000
+[t=  340] DETECT             5 smell gas  0 located it  need 3  λ₂=0.000
+[t=  360] DETECT             5 smell gas  0 located it  need 3  λ₂=0.000
+[t=  380] DETECT             5 smell gas  0 located it  need 3  λ₂=0.000
+[t=  400] DETECT             5 smell gas  1 located it  need 3  λ₂=0.000
+[t=  420] DETECT             5 smell gas  1 located it  need 3  λ₂=0.382
+[t=  440] DETECT             5 smell gas  2 located it  need 3  λ₂=0.519
+[t=  460] DETECT             5 smell gas  2 located it  need 3  λ₂=0.519
+[t=  480] DETECT             5 smell gas  2 located it  need 3  λ₂=0.519
+[t=  493] PHASE              LEAK → CONSENSUS
+[t=  500] CONSENSUS          σ=0.0px  obs=3H/3T  stable=7/30  λ₂=0.830
+[t=  510] CONSENSUS          σ=0.0px  obs=3H/3T  stable=17/30  λ₂=1.000
+[t=  520] CONSENSUS          σ=0.0px  obs=3H/3T  stable=27/30  λ₂=1.000
+[t=  523] REPORTED           agreed (562, 228) err=39.0px
+[t=  523] PHASE              CONSENSUS → REPORTED

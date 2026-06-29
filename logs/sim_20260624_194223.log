@@ -1,0 +1,7 @@
+# Simulation started at Wed Jun 24 19:42:23 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localisation
+[t=    0] MODE               Hazard Localisation → Formation Control
+[t=    0] MODE               exiting Hazard Localisation
+[t=    0] MODE               entered Formation Control
+[t=    0] FORMATION          shape → triangle

@@ -1,0 +1,45 @@
+# Simulation started at Sun Jun 28 19:28:37 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localization
+[t=   30] PHASE              MONITOR → LEAK
+[t=   30] LEAK_START         new leak at (451, 500)
+[t=   30] DETECT             0/3 located the leak  λ₂=3.00
+[t=   60] DETECT             0/3 located the leak  λ₂=2.00
+[t=  104] DETECT             1/3 located the leak  λ₂=2.00
+[t=  120] DETECT             1/3 located the leak  λ₂=3.00
+[t=  180] DETECT             1/3 located the leak  λ₂=5.00
+[t=  240] DETECT             1/3 located the leak  λ₂=5.00
+[t=  248] DETECT             2/3 located the leak  λ₂=5.00
+[t=  271] DETECT             3/3 located the leak  λ₂=5.00
+[t=  271] PHASE              LEAK → CONSENSUS
+[t=  280] CONSENSUS          σ=5.9px  obs=3H/3T  stable=9/30  λ₂=5.000
+[t=  290] CONSENSUS          σ=5.6px  obs=3H/3T  stable=19/30  λ₂=5.000
+[t=  300] CONSENSUS          σ=6.5px  obs=3H/3T  stable=29/30  λ₂=5.000
+[t=  301] REPORTED           agreed (468, 473) err=32.2px
+[t=  301] PHASE              CONSENSUS → REPORTED
+[t=  522] PHASE              REPORTED → MONITOR
+[t=  564] PHASE              MONITOR → LEAK
+[t=  564] LEAK_START         new leak at (149, 310)
+[t=  564] DETECT             0/3 located the leak  λ₂=1.00
+[t=  600] DETECT             0/3 located the leak  λ₂=1.00
+[t=  628] DETECT             1/3 located the leak  λ₂=1.00
+[t=  660] DETECT             1/3 located the leak  λ₂=1.00
+[t=  683] DETECT             2/3 located the leak  λ₂=0.52
+[t=  720] DETECT             2/3 located the leak  λ₂=0.52
+[t=  759] DETECT             3/3 located the leak  λ₂=0.52
+[t=  759] PHASE              LEAK → CONSENSUS
+[t=  760] CONSENSUS          σ=15.5px  obs=3H/3T  stable=1/30  λ₂=0.519
+[t=  770] CONSENSUS          σ=13.8px  obs=3H/3T  stable=11/30  λ₂=0.519
+[t=  780] CONSENSUS          σ=7.9px  obs=3H/3T  stable=21/30  λ₂=0.519
+[t=  789] REPORTED           agreed (136, 326) err=19.9px
+[t=  789] PHASE              CONSENSUS → REPORTED
+[t=  794] MODE               Hazard Localization → Sensor Degradation & Trust
+[t=  794] MODE               exiting Hazard Localization
+[t=  794] MODE               entered Sensor Degradation & Trust
+[t=  798] DEGRADE            auto-degradation ON
+[t=  993] PHASE              MONITOR → LEAK
+[t=  993] LEAK_START         new leak at (411, 463)
+[t= 1017] ROBOT              R0: manual degradation triggered
+[t= 1236] PHASE              LEAK → CONSENSUS
+[t= 1237] ROBOT              R3: manual degradation triggered
+[t= 1240] CONSENSUS          σ=14.3px  obs=2H/3T  stable=4/30  λ₂=1.000

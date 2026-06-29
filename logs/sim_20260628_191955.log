@@ -1,0 +1,43 @@
+# Simulation started at Sun Jun 28 19:19:55 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localization
+[t=   18] MODE               Hazard Localization → Formation Control
+[t=   18] MODE               exiting Hazard Localization
+[t=   18] MODE               entered Formation Control
+[t=  666] FORMATION          shape → line
+[t=  954] FORMATION          shape → circle
+[t= 1866] FORMATION          shape → triangle
+[t= 2218] FORMATION          shape → circle
+[t= 3610] FORMATION          shape → circle
+[t= 4922] FORMATION          shape → line
+[t= 5162] FORMATION          shape → circle
+[t= 6650] FORMATION          shape → line
+[t= 7034] FORMATION          shape → v
+[t= 7306] FORMATION          shape → triangle
+[t= 7514] MODE               Formation Control → Hazard Localization
+[t= 7514] MODE               exiting Formation Control
+[t= 7514] MODE               entered Hazard Localization
+[t= 7713] PHASE              MONITOR → LEAK
+[t= 7713] LEAK_START         new leak at (373, 155)
+[t= 7714] DETECT             0/3 located the leak  λ₂=0.83
+[t= 7740] DETECT             0/3 located the leak  λ₂=0.83
+[t= 7800] DETECT             0/3 located the leak  λ₂=3.00
+[t= 7860] DETECT             0/3 located the leak  λ₂=1.00
+[t= 7920] DETECT             0/3 located the leak  λ₂=1.59
+[t= 7980] DETECT             0/3 located the leak  λ₂=1.59
+[t= 8036] DETECT             1/3 located the leak  λ₂=1.59
+[t= 8040] DETECT             1/3 located the leak  λ₂=1.59
+[t= 8058] DETECT             2/3 located the leak  λ₂=3.00
+[t= 8100] DETECT             2/3 located the leak  λ₂=5.00
+[t= 8118] DETECT             3/3 located the leak  λ₂=5.00
+[t= 8118] PHASE              LEAK → CONSENSUS
+[t= 8120] CONSENSUS          σ=19.2px  obs=3H/3T  stable=2/30  λ₂=5.000
+[t= 8130] CONSENSUS          σ=17.7px  obs=3H/3T  stable=12/30  λ₂=5.000
+[t= 8140] CONSENSUS          σ=17.6px  obs=3H/3T  stable=22/30  λ₂=5.000
+[t= 8148] REPORTED           agreed (411, 168) err=39.8px
+[t= 8148] PHASE              CONSENSUS → REPORTED
+[t= 8369] PHASE              REPORTED → MONITOR
+[t= 8396] PHASE              MONITOR → LEAK
+[t= 8396] LEAK_START         new leak at (629, 181)
+[t= 8396] DETECT             1/3 located the leak  λ₂=0.52
+[t= 8400] DETECT             1/3 located the leak  λ₂=0.52

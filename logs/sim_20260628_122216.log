@@ -1,0 +1,18 @@
+# Simulation started at Sun Jun 28 12:22:16 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localisation
+[t=  199] PHASE              MONITOR → LEAK
+[t=  199] LEAK_START         new leak at (227, 386)
+[t=  200] DETECT             0/3 located the leak  λ₂=0.70
+[t=  240] DETECT             0/3 located the leak  λ₂=1.00
+[t=  255] DETECT             1/3 located the leak  λ₂=3.00
+[t=  268] DETECT             2/3 located the leak  λ₂=3.00
+[t=  300] DETECT             2/3 located the leak  λ₂=3.00
+[t=  360] DETECT             2/3 located the leak  λ₂=5.00
+[t=  394] DETECT             3/3 located the leak  λ₂=5.00
+[t=  394] PHASE              LEAK → CONSENSUS
+[t=  400] CONSENSUS          σ=20.8px  obs=3H/3T  stable=6/30  λ₂=5.000
+[t=  410] CONSENSUS          σ=13.3px  obs=3H/3T  stable=16/30  λ₂=5.000
+[t=  420] CONSENSUS          σ=15.3px  obs=4H/4T  stable=26/30  λ₂=5.000
+[t=  424] REPORTED           agreed (260, 411) err=41.8px
+[t=  424] PHASE              CONSENSUS → REPORTED
