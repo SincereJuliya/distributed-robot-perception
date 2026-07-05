@@ -69,8 +69,6 @@ class DistributedKalmanFilter:
     def __init__(self, robots):
         self.robots = robots
 
-    # ── Public API ────────────────────────────────────────────────────────────
-
     def predict_all(self):
         Q = np.eye(2) * config.DKF_PROCESS_NOISE
         for r in self.robots:
@@ -186,7 +184,7 @@ class DistributedKalmanFilter:
             initiator.gossip_updated = True
             partner.gossip_updated   = True
 
-    # ── Trust filter ─────────────────────────────────────────────────────────
+    # Trust filter
 
     @staticmethod
     def _trusted(r):
@@ -205,7 +203,7 @@ class DistributedKalmanFilter:
         thresh = getattr(config, "TRUST_EXCLUDE_THRESHOLD", 0.4)
         return r.own_reputation >= thresh
 
-    # ── Network-level queries ─────────────────────────────────────────────────
+    # Network-level queries
 
     def network_belief(self):
         """

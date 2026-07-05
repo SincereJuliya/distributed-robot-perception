@@ -11,12 +11,13 @@ perturbed at every step by a uniform random angular increment:
     θ_i(t) = θ_i(t - Δt) + ν,   ν ~ U(-θ_M, θ_M)
 
 When a robot reaches the boundary of the area of interest, its
-heading is reflected to point back inwards:
+heading is reset to the inward normal direction, perturbed by a
+bounded random offset:
 
-    θ_i(t) = ν · θ_in · θ_r / θ_M
+    θ_i(t) = θ_in + ν_r · θ_r,   ν_r ~ U(-1, 1)
 
 where θ_in is the inward normal direction at the border and θ_r is
-a fixed reflection constant.
+a fixed reflection constant (report Eq. (9), θ_r = 75°).
 
 Collision avoidance: if ‖ξ_i − ξ_j‖ ≤ d_m the two robots receive
 opposite repulsive headings.

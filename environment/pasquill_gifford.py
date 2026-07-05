@@ -4,7 +4,6 @@ environment/pasquill_gifford.py
 Analytical Pasquill–Gifford Gaussian Plume model — direct
 implementation of Eq. (2) from Facinelli, Larcher, Brunelli, Fontanelli
 "Cooperative UAVs Gas Monitoring using Distributed Consensus"
-(IEEE COMPSAC 2019, arXiv:1907.07279).
 
 The local concentration C(x, y, z) at distance (x, y, z) from a stack
 of height H_s is:

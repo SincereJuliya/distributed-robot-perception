@@ -42,7 +42,7 @@ class GasField:
         self.wind       = np.array(config.WIND_VEC, dtype=float)
         self._wind_age  = 0
 
-    # ── Control ───────────────────────────────────────────────────────────────
+    # Control 
 
     def add_source(self, source_px):
         """Activate a new emission point."""
@@ -61,7 +61,7 @@ class GasField:
     def emitting(self):
         return len(self.sources) > 0
 
-    # ── Dynamics ──────────────────────────────────────────────────────────────
+    # Dynamics 
 
     def step(self):
         # inject gas at all active sources
@@ -81,7 +81,7 @@ class GasField:
             self.wind = np.clip(np.array(config.WIND_VEC) +
                                 np.random.uniform(-0.04, 0.04, 2), -0.3, 0.3)
 
-    # ── Queries ───────────────────────────────────────────────────────────────
+    # Queries 
 
     def sample_at_px(self, x, y, radius_px):
         """Mean concentration in a circle around (x, y)."""

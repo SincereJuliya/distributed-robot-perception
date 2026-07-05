@@ -87,7 +87,7 @@ class Robot:
         self._smooth_centroid = None
         self.trail = collections.deque(maxlen=config.TRAIL_LEN)
 
-    # ── Sensing ───────────────────────────────────────────────────────────────
+    # ── Sensing ─
 
     def sense(self, gas):
         """
@@ -225,14 +225,14 @@ class Robot:
 
         self._stage_changed = prev_stage != self.stage
 
-    # ── Communication ────────────────────────────────────────────────────────
+    # Communication 
 
     def neighbours(self, all_robots):
         return [r for r in all_robots
                 if r.is_alive and r.id != self.id
                 and np.linalg.norm(self.position - r.position) < self.comm_r]
 
-    # ── Movement ──────────────────────────────────────────────────────────────
+    # ── Movement 
 
     def update_smooth_centroid(self, c):
         if self._smooth_centroid is None:

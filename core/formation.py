@@ -48,7 +48,7 @@ class FormationControl:
         self.rotation = 0.0
         self.assign_slots()
 
-    # ── Slot assignment ──────────────────────────────────────────────────────
+    # Slot assignment
 
     def assign_slots(self):
         """Assign formation_slot to each alive robot."""
@@ -72,8 +72,8 @@ class FormationControl:
         self.shape = self.SHAPES[(idx + 1) % len(self.SHAPES)]
         return self.shape
 
-    # ── Leader path ───────────────────────────────────────────────────────────
-
+    # Leader path
+    
     def step_center(self):
         """Advance the formation center along the chosen leader path."""
         self._t += 1
@@ -120,7 +120,7 @@ class FormationControl:
         self.center[0] = np.clip(self.center[0], m, config.MAP_W - m)
         self.center[1] = np.clip(self.center[1], m, config.MAP_H - m)
 
-    # ── Offset for a given slot ──────────────────────────────────────────────
+    # Offset for a given slot
 
     def slot_offset(self, slot, n_total):
         """Offset vector from center for slot index `slot` (of n_total).
@@ -176,7 +176,7 @@ class FormationControl:
             return v0 + local * (v1 - v0)
         return np.zeros(2)
 
-    # ── Target update ────────────────────────────────────────────────────────
+    # Target update
 
     def update_targets(self):
         alive = [r for r in self.robots if r.is_alive]
@@ -196,7 +196,7 @@ class FormationControl:
             # starts clean.
             r._smooth_centroid = None
 
-    # ── Formation error metric ───────────────────────────────────────────────
+    # Formation error metric
 
     def formation_error(self) -> float:
         """Total deviation of robots from their assigned formation slots."""
