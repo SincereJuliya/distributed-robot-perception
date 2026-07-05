@@ -143,17 +143,17 @@ def fig_explorers_box(rows, out_path):
     LT = [r["total_steps"] for r in rows if r["exploration"] == "lloyd"       and r["completed"]]
     RT = [r["total_steps"] for r in rows if r["exploration"] == "random_walk" and r["completed"]]
     fig, axes = plt.subplots(1, 2, figsize=(10, 4.5), facecolor="white")
-    axes[0].boxplot([L, R], tick_labels=["Lloyd", "RandomWalk"],
-                    patch_artist=True,
+    axes[0].boxplot([L, R], patch_artist=True,
                     boxprops=dict(facecolor="#3b7a8c", alpha=0.6))
+    axes[0].set_xticks([1, 2]); axes[0].set_xticklabels(["Lloyd", "RandomWalk"])
     axes[0].set_ylabel("Localization error [px]")
     axes[0].set_title(f"Error  (N = {len(L)} per arm)")
     axes[0].axhline(50, color="red", ls="--", lw=1)
     axes[0].grid(True, alpha=0.3)
 
-    axes[1].boxplot([LT, RT], tick_labels=["Lloyd", "RandomWalk"],
-                    patch_artist=True,
+    axes[1].boxplot([LT, RT], patch_artist=True,
                     boxprops=dict(facecolor="#c89000", alpha=0.6))
+    axes[1].set_xticks([1, 2]); axes[1].set_xticklabels(["Lloyd", "RandomWalk"])
     axes[1].set_ylabel("Total time [steps]")
     axes[1].set_title("Leak → report")
     axes[1].grid(True, alpha=0.3)
@@ -167,8 +167,9 @@ def fig_degradation_box(rows, out_path):
     data = [[r["err"] for r in rows
              if r.get("condition") == c and r["completed"]] for c in conds]
     fig, ax = plt.subplots(figsize=(7, 4.5), facecolor="white")
-    ax.boxplot(data, tick_labels=conds, patch_artist=True,
+    ax.boxplot(data, patch_artist=True,
                boxprops=dict(facecolor="#7a5a8c", alpha=0.6))
+    ax.set_xticks(range(1, len(conds) + 1)); ax.set_xticklabels(conds)
     ax.axhline(50, color="red", ls="--", lw=1, label="ρ_m")
     ax.set_ylabel("Localization error [px]")
     ax.set_title(f"Mode-2 sensor degradation  (N = {len(data[0])} per arm)")
@@ -183,8 +184,9 @@ def fig_ablation_box(rows, out_path):
              if r.get("condition") == c and r["completed"]
              and r["err"] is not None] for c in conds]
     fig, ax = plt.subplots(figsize=(8, 4.5), facecolor="white")
-    ax.boxplot(data, tick_tick_labels=conds, patch_artist=True,
+    ax.boxplot(data, patch_artist=True,
                boxprops=dict(facecolor="#3b7a8c", alpha=0.55))
+    ax.set_xticks(range(1, len(conds) + 1)); ax.set_xticklabels(conds)
     ax.axhline(50, color="red", ls="--", lw=1, label="ρ_m = 50 px")
     ax.set_ylabel("Localization error [px]")
     ax.set_title(f"Per-robot ablation (N = {len(data[0])} per arm)")
