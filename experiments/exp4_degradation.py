@@ -42,6 +42,8 @@ def main():
         ("baseline",    ()),
         ("k=1 degraded", (2,)),
         ("k=2 degraded", (2, 3)),
+        ("k=3 degraded", (2, 3, 4)),
+        ("k=4 degraded", (1, 2, 3, 4)),
     ]
     for label, degraded in conditions:
         print(f"\n=== {label} ===")
