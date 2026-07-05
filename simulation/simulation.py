@@ -14,6 +14,7 @@ One `step()` advances the world by one tick:
   8. metrics logged to CSV
 """
 
+import numpy as np
 import config
 from environment import GasField, build_free_space, random_spawn_points
 from agents       import Robot
@@ -92,6 +93,26 @@ class Simulation:
         # 4. distributed estimation
         self.gossip.run_one_step()
         self.dkf.predict_all()
+
+        # DKF update step (course notes, Sec. 18.2): each healthy robot
+        # that observed a gas peak this step incorporates it as a local
+        # measurement in information form,
+        #   Omega <- Omega + R^-1,   xi <- xi + R^-1 z,
+        # with H = I (the peak location observes the source position
+        # directly) and measurement noise scaled with the distance to
+        # the observed peak, R = max(R_min, R0 (d/rho)^2) I. Degraded
+        # robots skip the update: their measurement is the fault under
+        # test in Mode 2.
+        for _r in self.robots:
+            obs = getattr(_r, "_last_peak_obs", None)
+            _r._last_peak_obs = None
+            if (obs is None or not _r.is_alive or _r.manual_degradation
+                    or _r.dkf_mu is None):
+                continue
+            _z, _dist = obs
+            _rho = max(_r.sense_r, 1)
+            _Rvar = max(100.0, config.DKF_OBS_NOISE * (_dist / _rho) ** 2)
+            self.dkf.local_update(_r, _z, R=np.eye(2) * _Rvar)
 
         # In Mode 2 we use trust-weighted fusion; in other modes plain fusion
         if self.scenario.active_key == ScenarioManager.DEGRADATION:

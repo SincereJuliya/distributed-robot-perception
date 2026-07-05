@@ -1,0 +1,37 @@
+# Simulation started at Sun Jul  5 22:29:59 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localization
+[t=  199] PHASE              MONITOR → LEAK
+[t=  199] LEAK_START         new leak at (101, 304)
+[t=  200] DETECT             0/3 located the leak  λ₂=1.00
+[t=  240] DETECT             0/3 located the leak  λ₂=1.00
+[t=  300] DETECT             0/3 located [t=  280] PHASE              MONITOR → LEAK
+[t=  280] LEAK_START         new leak[t=  420] DETEC[t=  750] PHASE              LEAK → CONSENSUS
+[t=  760] CONSENSUS          σ=6.9px  obs=3H/3T  stable=10/30  λ₂=-0.000
+[t=  770] CONSENSUS          σ=8.2px  obs=3H/3T  stable=20/30  λ₂=1.000
+[t=  780] CONSENSUS          σ=8.5px  obs=3H/3T  stable=30/30  λ₂=1.000
+[t=  780] REPORTED           agreed (595, 211) err=0.8px
+[t=  780] PHASE              CONSENSUS → REPORTED
+0/3 located the leak  λ₂=1.59
+[t=  840] DETECT             0/3 located the leak  λ₂=0.83
+[t=  859] DETECT             1/3 located the leak  λ₂=0.83
+[t=  900] DETECT             1/3 located the leak  λ₂=0.83
+[t=  908] DETECT             2/3 located the leak  λ₂=0.52
+[t=  960] DETECT             2/3 located the leak  λ₂=0.52
+[t= 1020] DETECT             2/3 located the leak  λ₂=1.00
+[t= 1080] DETECT             2/3 located the leak  λ₂=1.00
+[t= 1140] DETECT             2/3 located the leak  λ₂=0.52
+[t= 1141] DETECT             3/3 located the leak  λ₂=0.52
+[t= 1260] DETECT             2/3 located the lea[t= 1150] CONS[t= 1320] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1380] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1440] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1500] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1560] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1620] DETECT             2/3 located the leak  λ₂=0.00
+[t= 1678] DETECT             3/3 located the leak  λ₂=0.00
+[t= 1678] PHASE              LEAK → CONSENSUS
+[t= 1680] CONSENSUS          σ=9.6px  obs=3H/3T  stable=2/30  λ₂=0.000
+[t= 1690] CONSENSUS          σ=4.5px  obs=3H/3T  stable=12/30  λ₂=0.000
+[t= 1700] CONSENSUS          σ=7.1px  obs=3H/3T  stable=22/30  λ₂=0.000
+[t= 1708] REPORTED           agreed (419, 395) err=16.7px
+[t= 1708] PHASE              CONSENSUS → REPORTED

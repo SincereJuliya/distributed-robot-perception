@@ -73,9 +73,15 @@ class TrustReputation:
             for rj in ri.neighbours(alive):
                 target = 1.0
 
-                # Signal 1: DKF belief disagreement
-                if ri.dkf_mu is not None and rj.dkf_mu is not None:
-                    disagree = float(np.linalg.norm(ri.dkf_mu - rj.dkf_mu))
+                # Signal 1: DKF belief disagreement.
+                # Bugfix: compare the SEED beliefs (raw independent
+                # observations) rather than the post-fusion dkf_mu —
+                # gossip merges everyone's dkf_mu toward a common value
+                # each step, so post-fusion disagreement is ~0 by
+                # construction and the signal could never fire.
+                if ri.dkf_seed_mu is not None and rj.dkf_seed_mu is not None:
+                    disagree = float(np.linalg.norm(
+                        ri.dkf_seed_mu - rj.dkf_seed_mu))
                     target = min(target,
                                  math.exp(-disagree / config.TRUST_DISAGREE_PX))
 

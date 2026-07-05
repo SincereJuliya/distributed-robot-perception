@@ -79,10 +79,3 @@ python3 main.py
 | `Space` | Pause / resume | any |
 | `R` | Reset simulation | any |
 | `Q` / `Esc` | Quit | any |
-
-## Batch experiments (for the report)
-
-```bash
-python3 experiments/batch_run.py --runs 30
-python3 experiments/plot_results.py
-```

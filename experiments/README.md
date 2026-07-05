@@ -55,19 +55,19 @@ hard to interpret:
 
 ```bash
 # Experiment 1 — Mode-1 accuracy (default N=100, r_c=500)
-python experiments/exp1_mode1_accuracy.py
+python3 experiments/exp1_mode1_accuracy.py
 
 # Experiment 2 — comm-radius sweep (paired seeds across radii)
-python experiments/exp2_comm_radius.py --runs 15
+python3 experiments/exp2_comm_radius.py --runs 15
 
 # Experiment 3 — Lloyd vs RandomWalk (paired)
-python experiments/exp3_explorers.py --runs 30
+python3 experiments/exp3_explorers.py --runs 30
 
 # Experiment 4 — Mode-2 degradation (paired baseline / k=1 / k=2)
-python experiments/exp4_degradation.py --runs 10
+python3 experiments/exp4_degradation.py --runs 10
 
 # All figures
-python experiments/plot_results.py
+python3 experiments/plot_results.py
 ```
 
 Each script writes a CSV and a text summary to `experiments/results/`.

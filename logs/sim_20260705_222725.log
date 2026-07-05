@@ -1,0 +1,69 @@
+# Simulation started at Sun Jul  5 22:27:25 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localization
+[t=  199] PHASE              MONITOR → LEAK
+[t=  199] LEAK_START         new leak at (665, 427)
+[t=  200] DETECT             0/3 located the leak  λ₂=0.83
+[t=  240] DETECT             0/3 located the leak  λ₂=0.83
+[t=  300] DETECT             0/3 located the leak  λ₂=0.52
+[t=  360] DETECT             0/3 located the leak  λ₂=0.52
+[t=  383] DETECT             1/3 located the leak  λ₂=0.52
+[t=  420] DETECT             1/3 located the leak  λ₂=0.52
+[t=  427] DETECT             2/3 located the leak  λ₂=0.83
+[t=  480] DETECT             2/3 located the leak  λ₂=1.00
+[t=  502] DETECT             3/3 located the leak  λ₂=1.00
+[t=  502] PHASE              LEAK → CONSENSUS
+[t=  510] CONSENSUS          σ=8.3px  obs=3H/3T  stable=8/30  λ₂=1.000
+[t=  520] CONSENSUS          σ=8.3px  obs=3H/3T  stable=18/30  λ₂=2.000
+[t=  530] CONSENSUS          σ=8.6px  obs=3H/3T  stable=28/30  λ₂=2.000
+[t=  532] REPORTED           agreed (665, 422) err=5.7px
+[t=  532] PHASE              CONSENSUS → REPORTED
+[t=  753] PHASE              REPORTED → MONITOR
+[t=  953] PHASE              MONITOR → LEAK
+[t=  953] LEAK_START         new leak at (248, 352)
+[t=  954] DETECT             0/3 located the leak  λ₂=0.70
+[t=  960] DETECT             0/3 located the leak  λ₂=0.70
+[t=  972] DETECT             1/3 located the leak  λ₂=0.70
+[t= 1006] DETECT             2/3 located the leak  λ₂=1.59
+[t= 1020] DETECT             2/3 located the leak  λ₂=1.59
+[t= 1080] DETECT             2/3 located the leak  λ₂=2.00
+[t= 1125] DETECT             3/3 located the leak  λ₂=3.00
+[t= 1125] PHASE              LEAK → CONSENSUS
+[t= 1130] CONSENSUS          σ=24.5px  obs=3H/3T  stable=5/30  λ₂=3.000
+[t= 1140] CONSENSUS          σ=15.7px  obs=3H/3T  stable=15/30  λ₂=3.000
+[t= 1150] CONSENSUS          σ=9.0px  obs=3H/3T  stable=25/30  λ₂=5.000
+[t= 1155] REPORTED           agreed (256, 355) err=8.4px
+[t= 1155] PHASE              CONSENSUS → REPORTED
+[t= 1376] PHASE              REPORTED → MONITOR
+[t= 1511] MODE               Hazard Localization → Sensor Degradation & Trust
+[t= 1511] MODE               exiting Hazard Localization
+[t= 1511] MODE               entered Sensor Degradation & Trust
+[t= 1710] PHASE              MONITOR → LEAK
+[t= 1710] LEAK_START         new leak at (243, 333)
+[t= 2241] PHASE              LEAK → CONSENSUS
+[t= 2250] CONSENSUS          σ=25.2px  obs=3H/3T  stable=0/30  λ₂=5.000
+[t= 2260] CONSENSUS          σ=15.7px  obs=3H/3T  stable=10/30  λ₂=5.000
+[t= 2270] CONSENSUS          σ=20.7px  obs=4H/4T  stable=20/30  λ₂=5.000
+[t= 2280] CONSENSUS          σ=17.7px  obs=4H/4T  stable=30/30  λ₂=5.000
+[t= 2280] REPORTED           agreed (268, 336) err=26.0px
+[t= 2280] PHASE              CONSENSUS → REPORTED
+[t= 2311] DEGRADE            auto-degradation ON
+[t= 2501] PHASE              REPORTED → MONITOR
+[t= 2530] ROBOT              R4: manual degradation triggered
+[t= 2701] PHASE              MONITOR → LEAK
+[t= 2701] LEAK_START         new leak at (105, 310)
+[t= 2750] ROBOT              R0: manual degradation triggered
+[t= 2859] PHASE              LEAK → CONSENSUS
+[t= 2860] CONSENSUS          σ=21.1px  obs=2H/3T  stable=1/30  λ₂=0.830
+[t= 2870] CONSENSUS          σ=16.6px  obs=2H/3T  stable=11/30  λ₂=0.830
+[t= 2880] CONSENSUS          σ=14.5px  obs=2H/3T  stable=21/30  λ₂=0.830
+[t= 2889] REPORTED           agreed (123, 322) err=22.1px
+[t= 2889] PHASE              CONSENSUS → REPORTED
+[t= 2970] ROBOT              R2: manual degradation triggered
+[t= 3110] PHASE              REPORTED → MONITOR
+[t= 3143] MODE               Sensor Degradation & Trust → Formation Control
+[t= 3143] MODE               exiting Sensor Degradation & Trust
+[t= 3143] MODE               entered Formation Control
+[t= 3639] FORMATION          shape → line
+[t= 3847] FORMATION          shape → v
+[t= 4071] FORMATION          shape → triangle

@@ -68,7 +68,11 @@ class Robot:
         self.position_estimates: dict = {self.id: self.position.copy()}
         self.dkf_mu: np.ndarray | None = None
         self.dkf_P:  np.ndarray | None = None
-        self.dkf_seed_mu: np.ndarray | None = None  # raw seed before gossip
+        self.dkf_seed_mu: np.ndarray | None = None
+        # raw seed before gossip; _last_peak_obs = this step's own peak
+        # observation (z, dist), consumed by the DKF update step in the
+        # simulation loop (course notes, Sec. 18.2).
+        self._last_peak_obs = None
         self.gossip_updated = False
 
         # Trust (Mode 2)
@@ -152,6 +156,10 @@ class Robot:
                 self.dkf_P       = np.eye(2) * config.DKF_INIT_COV
                 self.has_detected = True
                 self.dkf_seed_mu  = seed.copy()
+                # Expose the raw observation for the DKF update step
+                # (Ch. 18.2 of the course notes): z_i = peak location,
+                # observed directly (H = I).
+                self._last_peak_obs = (seed.copy(), dist)
         elif self.has_detected and not self.manual_degradation:
             # Refresh the seed estimate as the robot moves closer to the
             # source. A closer view gives a less noisy peak measurement
@@ -169,6 +177,8 @@ class Robot:
                 new_seed = new_seed + np.random.normal(0, noise, size=2)
                 # Smooth update — α=0.15 — so the curve doesn't jump
                 self.dkf_seed_mu = 0.85 * self.dkf_seed_mu + 0.15 * new_seed
+                # Raw (unsmoothed) observation for the DKF update step
+                self._last_peak_obs = (new_seed.copy(), dist)
 
         # Continuous belief perturbation for a degraded robot.
         # Even after the seed, a broken sensor keeps drifting the estimate.

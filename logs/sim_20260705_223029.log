@@ -1,0 +1,34 @@
+# Simulation started at Sun Jul  5 22:30:29 2026
+[t=    0] INIT               5 robots, map 900x600, obstacles=off, sources=1
+[t=    0] MODE               entered Hazard Localization
+[t=  199] PHASE              MONITOR → LEAK
+[t=  199] LEAK_START         new leak at (277, 472)
+[t=  200] DETECT             0/3 located the leak  λ₂=2.00
+[t=  217] DETECT             1/3 located the leak  λ₂=2.00
+[t=  221] DETECT             2/3 located the leak  λ₂=2.00
+[t=  240] DETECT             2/3 located the leak  λ₂=5.00
+[t=  300] DETECT             2/3 located the leak  λ₂=5.00
+[t=  310] DETEC[t=  493] PHASE              LEAK → CONSENSUS
+[t=  500] CONSENSUS          σ=24.8px  obs=2H/3T  stable=1/30  λ₂=-0.000
+[t=  510] CONSENSUS          σ=14.8px  obs=2H/3T  stable=11/30  λ₂=-0.000
+[t=  520] CONSENSUS          �[t=  720] DETECT             0/3 located the leak  λ₂=5.00
+[t=  780] DETECT             0/3 located the leak  λ₂=2.00
+[t=  840] DETECT             0/3 located the leak  λ₂=2.00
+[t=  900] DETECT             0/3 located the leak  λ₂=1.00
+[t=  960] DETECT             0/3 located the leak  λ₂=1.59
+[t= 1020] DETECT             0/3 located the leak  λ₂=1.00
+[t= 1080] DETECT             0/3 located the leak  λ₂=2.00
+[t= 1140] DETECT             0/3 located the leak  λ₂=5.00
+[t= 1200] DETECT             0/3 located the leak  λ₂=5.00
+[t= 1221] DETECT             1/3 located the leak  λ₂=5.00
+[t= 1260] DETECT             1/3 located the leak  λ₂=5.00
+[t= 1320] DETECT             1/3 located the leak  λ₂=5.00
+[t= 1346] DETECT             2/3 located the leak  λ₂=5.00
+[t= 1380] DETECT             2/3 located the leak  λ₂=5.00
+[t= 1390] DETECT             3/3 located the leak  λ₂=5.00
+[t= 1390] PHASE              LEAK → CONSENSUS
+[t= 1400] CONSENSUS          σ=9.0px  obs=4H/4T  stable=10/30  λ₂=5.000
+[t= 1410] CONSENSUS          σ=6.6px  obs=4H/4T  stable=20/30  λ₂=5.000
+[t= 1420] CONSENSUS          σ=6.7px  obs=4H/4T  stable=30/30  λ₂=5.000
+[t= 1420] REPORTED           agreed (711, 405) err=18.6px
+[t= 1420] PHASE              CONSENSUS → REPORTED

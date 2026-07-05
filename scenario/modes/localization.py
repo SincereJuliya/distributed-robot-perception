@@ -207,7 +207,13 @@ class LocalisationMode:
             scout_centroid = None
 
         for r in alive_robots:
-            if r.dkf_mu is not None:
+            # Bugfix: stand-off behaviour requires an OWN detection
+            # (has_detected), not merely a belief received via gossip —
+            # same condition as in the LEAK phase. Otherwise a robot that
+            # never sensed the gas could stop 80 px short of it and never
+            # contribute the independent observation the consensus gate
+            # counts.
+            if r.has_detected and r.dkf_mu is not None:
                 if r.manual_degradation:
                     # DEGRADED scout: stay in place as a beacon
                     r.target = r.position.copy()
