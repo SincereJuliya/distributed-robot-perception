@@ -40,10 +40,6 @@ distributed_perception/
 │   └── event_log.py                  In-memory + .log + .csv logging
 ├── visualisation/
 │   └── visualizer.py                 White-theme matplotlib UI
-├── experiments/
-│   ├── batch_run.py                  N runs → CSV
-│   ├── plot_results.py               CSV → report figures
-│   └── results/
 └── logs/                             Auto-generated per-run logs
 ```
 
