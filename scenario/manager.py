@@ -1,9 +1,7 @@
 """
 scenario/manager.py
 -------------------
-Top-level scenario manager. Holds the three mode instances and dispatches
-to the active one each step. Mode switching is triggered by keyboard
-(handled by the visualiser).
+Top-level scenario manager
 """
 
 from scenario.modes import LocalisationMode, DegradationMode, FormationMode
@@ -32,7 +30,7 @@ class ScenarioManager:
         self.active     = self.modes[self.active_key]
         self.active.enter(0)
 
-    # ── Mode switching ───────────────────────────────────────────────────────
+    # Mode switching
 
     def switch_to(self, key: str, step: int):
         if key not in self.modes or key == self.active_key:
@@ -45,7 +43,7 @@ class ScenarioManager:
         self.active.enter(step)
         return True
 
-    # ── Delegation ────────────────────────────────────────────────────────────
+    # Delegation
 
     def update(self, step):
         self.active.update(step)

@@ -1,21 +1,17 @@
 """
 scenario/modes/formation.py
 ---------------------------
-Mode 3 — Formation Control & Coordinated Patrol.
+Mode 3
 
-Robots form a geometric formation (circle / line / V) and the formation
-center moves along a leader path. If a robot is killed, the remaining
-robots redistribute themselves so the formation persists.
-
-This shows a *coordination* problem (distributed formation control) rather
-than estimation — different distributed algorithm class.
+Robots form a geometric formation (circle / line / V) and the formation center moves along a leader path.
+If a robot is killed, the remaining robots redistribute themselves so the formation persists.
 """
 
 import config
 
 
 class FormationMode:
-    """Mode 3 — coordinated formation patrol."""
+    """Mode 3 - coordinated formation patrol."""
 
     name = "Formation Control"
 
@@ -25,7 +21,7 @@ class FormationMode:
         self.free_space     = free_space
         self.log            = event_log
 
-        # No gas / no consensus in this mode — empty histories for the panel
+        # No gas / no consensus in this mode - empty histories for the panel
         self.consensus_history = []
         self.lambda2_history   = []
         self.leak_count        = 0
@@ -35,7 +31,7 @@ class FormationMode:
     def phase(self) -> str:
         return f"FORMATION: {self.formation_ctrl.shape.upper()}"
 
-    # ── Activation / deactivation ────────────────────────────────────────────
+    #  Activation / deactivation 
 
     def enter(self, step):
         self.log.info(step, "MODE", f"entered {self.name}")
@@ -47,24 +43,24 @@ class FormationMode:
     def exit(self, step):
         self.log.info(step, "MODE", f"exiting {self.name}")
 
-    # ── Main step ─────────────────────────────────────────────────────────────
+    #  Main step 
 
     def update(self, step):
         self.formation_ctrl.step_center()
         self.formation_ctrl.update_targets()
 
-    # ── External hooks ────────────────────────────────────────────────────────
+    #  External hooks 
 
     def cycle_shape(self, step):
         new_shape = self.formation_ctrl.cycle_shape()
-        self.log.info(step, "FORMATION", f"shape → {new_shape}", "event")
+        self.log.info(step, "FORMATION", f"shape -> {new_shape}", "event")
         return new_shape
 
     def set_shape(self, step, shape):
         """Directly select a shape (C/L/V/T hotkeys)."""
         new = self.formation_ctrl.set_shape(shape)
         if new is not None:
-            self.log.info(step, "FORMATION", f"shape → {new}", "event")
+            self.log.info(step, "FORMATION", f"shape -> {new}", "event")
         return new
 
     def kill_random(self, step):

@@ -1,14 +1,14 @@
-Experiment 3 — Lloyd vs Random Walk (paired, r_c=500, N=30)
+Experiment 3 - Lloyd vs Random Walk (paired, r_c=500, N=30)
 
-Metric                 Lloyd                      Random Walk               
-----------------------------------------------------------------------------
-Localization err px    9.3 [7.4, 11.5]            10.0 [7.6, 12.4]          
-Patrol-to-detect       112.3 [65.8, 165.1]        160.9 [89.5, 246.0]       
-Total leak→report      266.8 [215.4, 322.3]       297.6 [216.7, 388.6]      
+Metric                 Lloyd                Random Walk         
+----------------------------------------------------------------
+Localization err px    9.3 +- 5.7           10.0 +- 6.9         
+Patrol-to-detect       112.3 +- 141.8       160.9 +- 225.4      
+Total leak-report      266.8 +- 154.5       297.6 +- 247.0      
 
 Completion:  Lloyd 30/30   RandomWalk 30/30
 
-
-error           paired t = -0.41 (p = 0.6865)  Wilcoxon W = 208 (p = 0.6263)  [N pairs = 30]
-patrol_steps    paired t = -1.03 (p = 0.3106)  Wilcoxon W = 155 (p = 0.1765)  [N pairs = 30]
-total_steps     paired t = -0.59 (p = 0.5576)  Wilcoxon W = 198 (p = 0.4779)  [N pairs = 30]
+Mean paired difference (Lloyd - RandomWalk):
+  error px       -0.63 +- 8.45   [N pairs = 30]
+  patrol steps   -48.53 +- 257.57   [N pairs = 30]
+  total steps    -30.77 +- 284.08   [N pairs = 30]

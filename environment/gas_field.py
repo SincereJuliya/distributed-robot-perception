@@ -1,16 +1,14 @@
 """
 environment/gas_field.py
 ------------------------
-2-D toxic gas field with controllable point sources (one or many).
+2D gas concentration field
 
-Dynamics per step:
-  1. inject gas at every active source cell
-  2. Gaussian diffusion
-  3. wind advection
-  4. linear decay
+Per step:
+  1. inject gas at each active source cell (Q term)
+  2. Gaussian diffusion (Dc laplacian term, as a Gaussian blur)
+  3. wind advection (w . grad C, as a sub-pixel shift)
+  4. linear decay 
 
-Multiple-source support is required so we can match the Kapoutsis et al.
-setup with NUM_GAS_SOURCES > 1.
 """
 
 import numpy as np
@@ -102,13 +100,6 @@ class GasField:
             return None
         idx_y, idx_x = np.unravel_index(patch.argmax(), patch.shape)
         return _cell_to_px(x0 + idx_x, y0 + idx_y)
-
-    def global_peak_px(self):
-        """Pixel position of the strongest grid cell overall."""
-        if self.grid.max() < 0.01:
-            return None
-        idx_y, idx_x = np.unravel_index(self.grid.argmax(), self.grid.shape)
-        return _cell_to_px(idx_x, idx_y)
 
     def is_clear(self, threshold=0.02):
         return self.grid.max() < threshold

@@ -1,7 +1,8 @@
-Experiment 4 — Mode-2 degradation (r_c=350, N=10 per arm)
+Experiment 4 - Mode-2 degradation (r_c=350, N=10 per arm)
 
-Condition      done    err mean [CI]          within 50px  total mean [CI]       
-------------------------------------------------------------------------------
-baseline       10/10    6.1 [5.2, 7.1]         10/10      241 [178, 308]        
-k=1 degraded   10/10    6.9 [4.1, 10.6]        10/10      256 [202, 326]        
-k=2 degraded   10/10    10.8 [5.1, 19.0]       10/10      386 [277, 514]        
+Condition      done    err mean +- std      within 50px  total mean +- std   
+--------------------------------------------------------------------------
+baseline       10/10    6.1 +- 1.6           10/10         241 +- 111          
+k=1 degraded   10/10    6.9 +- 5.7           10/10         256 +- 104          
+k=2 degraded   10/10    10.8 +- 12.4         10/10         386 +- 200          
+k=3 degraded   8/10    10.6 +- 6.5          8/8          485 +- 251          

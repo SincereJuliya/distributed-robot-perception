@@ -1,19 +1,8 @@
 """
 core/graph_metrics.py
 ---------------------
-Communication-graph analysis: adjacency, Laplacian, algebraic connectivity λ₂.
+Communication-graph analysis: adjacency, Laplacian, algebraic connectivity lambda_2
 
-Why λ₂ matters
---------------
-For Laplacian L = D − A:
-    0 = λ₁ ≤ λ₂ ≤ … ≤ λₙ
-λ₂ (the Fiedler value) is the algebraic connectivity:
-  • λ₂ = 0   ⇔  graph disconnected — gossip cannot reach all nodes
-  • larger λ₂ ⇔ faster consensus
-  • per-step error contraction bounded by |1 − ε·λ₂|
-
-We plot λ₂(t) live to expose network health and to validate that
-consensus speeds up / slows down accordingly.
 """
 
 import numpy as np

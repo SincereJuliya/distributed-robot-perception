@@ -1,16 +1,9 @@
 """
 scenario/modes/degradation.py
 -----------------------------
-Mode 2 — Sensor Degradation & Trust-Weighted Consensus.
+Mode 2 - Sensor Degradation & Trust-Weighted Consensus
+Same localization pipeline as Mode 1, but the gossip / DKF fusion uses TrustReputation weights
 
-Same localization pipeline as Mode 1, but the gossip / DKF fusion uses
-TrustReputation weights. When a robot's sensor degrades (either organically
-or via manual D / 0-4 keys), its DKF belief drifts from the network mean.
-Through the trust-update rule, neighbours lower their trust in the bad
-robot — and its influence on the fused estimate shrinks automatically.
-
-This demonstrates *robust* distributed estimation in the presence of
-unreliable sensors.
 """
 
 import numpy as np
@@ -27,7 +20,7 @@ class Phase:
 
 
 class DegradationMode:
-    """Mode 2 — same flow as Mode 1, plus trust mechanics."""
+    """Mode 2 - same flow as Mode 1, plus trust mechanics."""
 
     name = "Sensor Degradation & Trust"
 
@@ -68,7 +61,7 @@ class DegradationMode:
             r.has_detected = False
             r.manual_degradation = False
 
-    # ── Manual degradation hooks ──────────────────────────────────────────────
+    #  Manual degradation hooks 
 
     def degrade_random(self, step):
         import random
@@ -101,7 +94,7 @@ class DegradationMode:
             self._auto_degrade_timer = 0
             self.degrade_random(step)
 
-    # ── Main step ─────────────────────────────────────────────────────────────
+    #  Main step 
 
     def update(self, step):
         self._maybe_auto_degrade(step)
@@ -117,11 +110,7 @@ class DegradationMode:
             # Robots patrol via Lloyd until their OWN sensor detects gas.
             self.lloyd.update_targets_uniform()
 
-            # ── SCOUT ALERT — critical for Mode 2 demonstration ─────────────
-            # has_detected is the reliable alert signal (requires real peak
-            # in sensing radius), not self_observed (which can fire on noise).
-            # Even a degraded robot's POSITION is accurate (GPS), so others
-            # can investigate by heading toward the scout's location.
+            # SCOUT ALERT - has_detected is the reliable alert signal (requires real peak in sensing radius), not self_observed (which can fire on noise)
             alive_robots = [r for r in self.robots if r.is_alive]
             scouts       = [r for r in alive_robots if r.has_detected]
 
@@ -190,22 +179,13 @@ class DegradationMode:
         self.consensus_history.clear()
 
     def _consensus_step(self, step):
-        # Scout-attraction in CONSENSUS: robots without their own belief
-        # head toward the scout cluster, even if outside comm range.
-        # This is critical when multiple robots are degraded — isolated
-        # healthy robots need to reach the gas area to participate.
+        # Scout-attraction in CONSENSUS: robots without their own belief head toward the scout cluster
         alive_robots = [r for r in self.robots if r.is_alive]
         scouts       = [r for r in alive_robots if r.has_detected]
         scout_centroid = (np.mean([s.position for s in scouts], axis=0)
                           if scouts else None)
 
         for r in alive_robots:
-            # Bugfix: stand-off behaviour requires an OWN detection
-            # (has_detected), not merely a belief received via gossip —
-            # same condition as in the LEAK phase. Otherwise a robot that
-            # never sensed the gas could stop 80 px short of it and never
-            # contribute the independent observation the consensus gate
-            # counts.
             if r.has_detected and r.dkf_mu is not None:
                 if r.manual_degradation:
                     # DEGRADED scout: stay in place as a beacon
@@ -235,8 +215,7 @@ class DegradationMode:
                     c = cell.centroid
                     r.target = np.array([c.x, c.y])
 
-        # Use seed beliefs (not post-gossip current beliefs) — see
-        # comment in localization.py for full explanation.
+        # Use seed beliefs
         sigma_display = self.dkf.estimate_disagreement_selfobs()
         if sigma_display >= 998:
             sigma_display = self.dkf.estimate_disagreement_all()
@@ -258,9 +237,9 @@ class DegradationMode:
         if step % 10 == 0:
             lam2 = self.lambda2_history[-1] if self.lambda2_history else 0.0
             self.log.info(step, "CONSENSUS",
-                f"σ={sigma_display:.1f}px  obs={n_obs_healthy}H/{n_obs_total}T  "
+                f"sigma={sigma_display:.1f}px  obs={n_obs_healthy}H/{n_obs_total}T  "
                 f"stable={self._consensus_stable}/{config.CONSENSUS_STABLE_STEPS}  "
-                f"λ₂={lam2:.3f}",
+                f"lambda2={lam2:.3f}",
                 severity="event")
 
         if self._consensus_stable >= config.CONSENSUS_STABLE_STEPS:

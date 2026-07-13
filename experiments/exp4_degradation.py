@@ -1,16 +1,13 @@
 """
 experiments/exp4_degradation.py
------------------------------------
-Experiment 4 — Mode-2 sensor degradation robustness.
+-------------------------------
+Experiment 4 - Mode-2 sensor degradation robustness
 
-Design: paired-seed three-arm comparison.
-  baseline    : all 5 robots healthy
-  k=1 degraded: robot 2 forced into degradation at step 80
-  k=2 degraded: robots 2 and 3 forced into degradation at step 80
-
-The Pasqualetti–Bicchi–Bullo bound says n=5 non-colluding faulty agents
-tolerate up to k < n/2 = 2 simultaneously faulty; we test both k=1 and
-k=2 to verify the bound holds in our system.
+Design: paired-seed multi-arm comparison at r_c = 350 px.
+  baseline     : all 5 robots healthy
+  k=1 degraded : robot 2 forced into degradation at step 80
+  k=2 degraded : robots 2, 3 degraded at step 80
+  k=3 degraded : robots 2, 3, 4 degraded at step 80
 
 Outputs:
   results/exp4_degradation.csv
@@ -25,7 +22,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from runner import run_one_cycle, FIELDS
-from stats import summarise, fmt_ci
+from stats import summarise, fmt_pm
 
 
 def main():
@@ -39,11 +36,10 @@ def main():
     os.makedirs(args.out_dir, exist_ok=True)
     rows = []
     conditions = [
-        ("baseline",    ()),
+        ("baseline",     ()),
         ("k=1 degraded", (2,)),
         ("k=2 degraded", (2, 3)),
         ("k=3 degraded", (2, 3, 4)),
-        ("k=4 degraded", (1, 2, 3, 4)),
     ]
     for label, degraded in conditions:
         print(f"\n=== {label} ===")
@@ -56,7 +52,7 @@ def main():
                                 max_steps=args.max_steps)
             rec["condition"] = label
             rows.append(rec)
-            ok = "✓" if rec["completed"] else "✗"
+            ok = "OK" if rec["completed"] else "--"
             err = f"{rec['err']:.1f}" if rec["err"] is not None else " - "
             print(f"  seed={seed}  {ok}  err={err:>5}  total={rec['total_steps']}")
 
@@ -64,26 +60,30 @@ def main():
     fields = FIELDS + ["condition"]
     with open(csv_path, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields); w.writeheader(); w.writerows(rows)
-    print(f"\n✓ CSV → {csv_path}")
+    print(f"\nCSV -> {csv_path}")
 
+    # Summary
     lines = [
-        f"Experiment 4 — Mode-2 degradation (r_c={args.r_c}, N={args.runs} per arm)",
+        f"Experiment 4 - Mode-2 degradation (r_c={args.r_c}, N={args.runs} per arm)",
         "",
-        f"{'Condition':<14} {'done':<7} {'err mean [CI]':<22} "
-        f"{'within 50px':<12} {'total mean [CI]':<22}",
-        "-" * 78,
+        f"{'Condition':<14} {'done':<7} {'err mean +- std':<20} "
+        f"{'within 50px':<12} {'total mean +- std':<20}",
+        "-" * 74,
     ]
     for label, _ in conditions:
         sub  = [r for r in rows if r["condition"] == label]
         done = [r for r in sub if r["completed"]]
+        if not done:
+            lines.append(f"{label:<14} 0/{len(sub):<5} (no completed runs)")
+            continue
         s_err = summarise([r["err"]         for r in done])
         s_tot = summarise([r["total_steps"] for r in done])
         within = sum(1 for r in done if r["in_tolerance_50"])
         lines.append(
             f"{label:<14} {len(done)}/{len(sub):<5} "
-            f"{fmt_ci(s_err['mean'], s_err['ci95_lo'], s_err['ci95_hi']):<22} "
-            f"{within}/{len(done):<7} "
-            f"{fmt_ci(s_tot['mean'], s_tot['ci95_lo'], s_tot['ci95_hi'], 0):<22}"
+            f"{fmt_pm(s_err['mean'], s_err['std']):<20} "
+            f"{within}/{len(done):<10} "
+            f"{fmt_pm(s_tot['mean'], s_tot['std'], 0):<20}"
         )
     txt = "\n".join(lines)
     print("\n" + txt)

@@ -1,15 +1,16 @@
-Experiment 5 — Per-robot ablation (r_c=500, N=15 per arm)
+Experiment 5 - Per-robot ablation (r_c=500, N=15 per arm)
 
-Condition      done    err mean [CI]          within ρ_m   total mean [CI]       
-------------------------------------------------------------------------------
-baseline       15/15    7.5 [5.6, 9.5]         15/15      243 [202, 287]        
-drop_R0        15/15    8.8 [5.7, 12.5]        15/15      257 [190, 350]        
-drop_R1        15/15    8.7 [6.5, 11.1]        15/15      268 [193, 353]        
-drop_R2        15/15    10.2 [6.9, 14.8]       15/15      212 [162, 268]        
-drop_R3        15/15    8.4 [5.3, 12.0]        15/15      278 [204, 373]        
-drop_R4        15/15    10.9 [7.9, 14.0]       15/15      258 [190, 349]        
+Condition      done    err mean +- std      within rho_m  total mean +- std   
+----------------------------------------------------------------------------
+baseline       15/15    7.5 +- 3.9           15/15          243 +- 87           
+drop_R0        15/15    8.8 +- 7.0           15/15          257 +- 164          
+drop_R1        15/15    8.7 +- 4.6           15/15          268 +- 164          
+drop_R2        15/15    10.2 +- 8.1          15/15          212 +- 110          
+drop_R3        15/15    8.4 +- 6.9           15/15          278 +- 173          
+drop_R4        15/15    10.9 +- 6.1          15/15          258 +- 166          
 
-Spread of mean error across robot identities: min = 8.4 px, max = 10.9 px, range = 2.5 px
+Spread of mean error across drop identities: min=8.4 px, max=10.9 px, range=2.5 px
+Baseline error std: 3.9 px
 
-Interpretation: small range across drop_id means no robot is critical;
-perception is genuinely distributed.
+A range smaller than the baseline std means no single robot is
+critical: perception is genuinely distributed.

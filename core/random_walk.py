@@ -1,30 +1,19 @@
 """
 core/random_walk.py
 -------------------
-Random Walk exploration strategy, following § III-B of Facinelli,
-Larcher, Brunelli, Fontanelli "Cooperative UAVs Gas Monitoring
-using Distributed Consensus" (COMPSAC 2019).
+Random Walk exploration strategy Facinelli "Cooperative UAVs Gas Monitoring using Distributed Consensus"
 
-Each robot moves with velocity v_m along a heading θ_i(t) that is
-perturbed at every step by a uniform random angular increment:
+Each robot moves with velocity v_m along a heading theta_i(t) that is perturbed at every step by a uniform random angular increment:
 
-    θ_i(t) = θ_i(t - Δt) + ν,   ν ~ U(-θ_M, θ_M)
+    theta_i(t) = theta_i(t - dt) + nu,   nu ~ U(-theta_M, theta_M)
 
-When a robot reaches the boundary of the area of interest, its
-heading is reset to the inward normal direction, perturbed by a
-bounded random offset:
+When a robot reaches the boundary of the area of interest, its heading is reset to the inward normal direction, perturbed by a bounded random offset:
 
-    θ_i(t) = θ_in + ν_r · θ_r,   ν_r ~ U(-1, 1)
+    theta_i(t) = theta_in + nu_r * theta_r,   nu_r ~ U(-1, 1)
 
-where θ_in is the inward normal direction at the border and θ_r is
-a fixed reflection constant (report Eq. (9), θ_r = 75°).
+where theta_in is the inward normal direction at the border and theta_r is a fixed reflection constant (report Eq. (9), theta_r = 75 deg).
 
-Collision avoidance: if ‖ξ_i − ξ_j‖ ≤ d_m the two robots receive
-opposite repulsive headings.
-
-This strategy is provided as an alternative to Lloyd–Voronoi
-coverage so the two can be benchmarked against each other (see the
-report § V-G "Lloyd vs Random Walk").
+Collision avoidance: if ||xi_i - xi_j|| <= d_m the two robots receive opposite repulsive headings.
 """
 
 import math
@@ -35,8 +24,7 @@ import config
 
 class RandomWalkExplorer:
     """
-    Random-walk patrol controller that sets robot.target each step.
-    Drop-in replacement for LloydVoronoi.update_targets_uniform.
+    Random-walk patrol controller that sets robot.target each step
     """
 
     def __init__(self, robots, free_space=None,
@@ -58,7 +46,7 @@ class RandomWalkExplorer:
         # `lloyd.cells.get(r.id)` and get None gracefully
         self.cells = {}
 
-    # ── Public API expected by the scenario state machine ────────────────────
+    #  Public API expected by the scenario state machine 
 
     def compute_cells(self):
         """No-op: random walk does not compute Voronoi cells."""
@@ -71,7 +59,7 @@ class RandomWalkExplorer:
                 continue
             self._step_one(r)
 
-    # ── Internal: one robot's heading update ────────────────────────────────
+    #  Internal: one robot's heading update 
 
     def _step_one(self, r):
         # 1. Heading perturbation
@@ -112,6 +100,6 @@ class RandomWalkExplorer:
         r.target = np.array([tx, ty], dtype=float)
 
     def _reflect_toward(self, inward_theta: float) -> float:
-        """Reflect heading toward `inward_theta` ± θ_r jitter."""
+        """Reflect heading toward `inward_theta` +- theta_r jitter."""
         nu = np.random.uniform(-1.0, 1.0)
         return inward_theta + nu * self.theta_reflect

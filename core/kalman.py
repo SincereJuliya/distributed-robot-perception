@@ -1,33 +1,23 @@
 """
 core/kalman.py
 --------------
-Distributed Kalman Filter (DKF) for leak-coordinate estimation.
+Distributed Kalman Filter (DKF)
 
 Each robot keeps a 2-D Gaussian belief over the leak position:
-    p(x | observations) ~ N(μ, P)
+    p(x | observations) ~ N(mu, P)
 
 Operations:
-  • predict_all   — covariance inflation by process noise Q
-  • local_update  — local observation update in information form:
-                       Ω_new = Ω_old + R⁻¹
-                       ξ_new = ξ_old + R⁻¹ z
-  • fuse_pairwise — two-robot fusion of beliefs in information form,
-                    weighted by sensor_quality (Olfati-Saber 2007).
+  - predict_all   - covariance inflation by process noise Q
+  - local_update  - local observation update in information form:
+                       Omega_new = Omega_old + R^-1
+                       xi_new = xi_old + R^-1 z
+  - fuse_pairwise - two-robot fusion of beliefs in information form, weighted by sensor_quality
 
 Network-level helpers:
-  • network_belief         — (mean μ, mean trace P) across robots with beliefs
-  • estimate_disagreement  — σ = ‖std(μ)‖, the visible "consensus σ" curve
+  - network_belief - (mean mu, mean trace P) across robots with beliefs
+  - estimate_disagreement_selfobs - sigma over seed beliefs (Eq.15),
+                                    the consensus criterion
 
-NUMERICAL STABILITY NOTE
-------------------------
-All inversions of covariance matrices are performed via Cholesky
-decomposition (scipy.linalg.cho_factor / cho_solve) rather than via the
-naive np.linalg.inv. Covariance matrices are symmetric positive-definite
-by construction, so the Cholesky factorisation is both faster and
-significantly more numerically stable. This matters because gossip fusion
-multiplies information matrices many times per step; rounding errors in
-naive inversions accumulate and can produce non-positive-definite
-covariances over long runs.
 """
 
 import numpy as np
@@ -38,14 +28,13 @@ import config
 
 def _inv_spd(M):
     """
-    Invert a symmetric positive-definite matrix via Cholesky.
-    Falls back to a regularised solve if the matrix is ill-conditioned.
+    Invert a symmetric positive-definite matrix via Cholesky
     """
     try:
         c, low = cho_factor(M, lower=True, check_finite=False)
         return cho_solve((c, low), np.eye(M.shape[0]), check_finite=False)
     except np.linalg.LinAlgError:
-        # Regularise the diagonal slightly and retry — covers the rare
+        # Regularise the diagonal slightly and retry - covers the rare
         # case of an ill-conditioned covariance after many gossip rounds.
         reg = M + np.eye(M.shape[0]) * 1e-6
         c, low = cho_factor(reg, lower=True, check_finite=False)
@@ -79,9 +68,9 @@ class DistributedKalmanFilter:
         """
         Local measurement update in information form.
 
-        Ω_new = Ω_old + R⁻¹           (information matrix add)
-        ξ_new = ξ_old + R⁻¹ z         (information vector add)
-        μ_new = Ω_new⁻¹ ξ_new
+        Omega_new = Omega_old + R^-1     (information matrix add)
+        xi_new = xi_old + R^-1 z         (information vector add)
+        mu_new = Omega_new^-1 xi_new
         """
         if R is None:
             R = np.eye(2) * config.DKF_OBS_NOISE
@@ -94,7 +83,7 @@ class DistributedKalmanFilter:
         xi    = Omega @ robot.dkf_mu
         Omega_new = Omega + R_inv
         xi_new    = xi + R_inv @ z
-        # μ = Ω_new⁻¹ ξ_new — solved via Cholesky, not by explicit inverse
+        # mu = Omega_new^-1 xi_new - solved via Cholesky, not by explicit inverse
         robot.dkf_mu = _solve_spd(Omega_new, xi_new)
         robot.dkf_P  = _inv_spd(Omega_new)
 
@@ -102,12 +91,11 @@ class DistributedKalmanFilter:
         """
         Two-robot belief fusion (Olfati-Saber 2007, information form).
 
-        Ω_f = w_i·Ω_i + w_j·Ω_j
-        ξ_f = w_i·ξ_i + w_j·ξ_j
-        μ_f = Ω_f⁻¹ ξ_f
+        Omega_f = w_i*Omega_i + w_j*Omega_j
+        xi_f = w_i*xi_i + w_j*xi_j
+        mu_f = Omega_f^-1 xi_f
 
-        trust_weights: optional dict {(observer_id, target_id) → weight}
-                       from Mode 2, multiplied into sensor_quality.
+        trust_weights: optional dict {(observer_id, target_id) -> weight} from Mode 2, multiplied into sensor_quality
         """
         has_i = ri.dkf_mu is not None
         has_j = rj.dkf_mu is not None
@@ -123,7 +111,7 @@ class DistributedKalmanFilter:
             ri.dkf_P  = rj.dkf_P.copy()
             return
 
-        # Information form: Ω = P⁻¹, ξ = Ω·μ
+        # Information form: Omega = P^-1, xi = Omega*mu
         Omega_i = _inv_spd(ri.dkf_P)
         Omega_j = _inv_spd(rj.dkf_P)
         xi_i    = Omega_i @ ri.dkf_mu
@@ -144,7 +132,7 @@ class DistributedKalmanFilter:
         Omega_f = wi * Omega_i + wj * Omega_j
         xi_f    = wi * xi_i + wj * xi_j
 
-        # μ_f = Ω_f⁻¹ ξ_f — solve via Cholesky to avoid explicit inverse
+        # mu_f = Omega_f^-1 xi_f - solve via Cholesky to avoid explicit inverse
         mu_f = _solve_spd(Omega_f, xi_f)
         P_f  = _inv_spd(Omega_f)
 
@@ -157,17 +145,8 @@ class DistributedKalmanFilter:
         """
         One round of pairwise DKF belief fusion.
 
-        Robots whose network reputation has fallen below
-        ``TRUST_EXCLUDE_THRESHOLD`` are excluded from gossip. The
-        reputation is built from OBSERVED disagreement (see
-        ``trust.py``), so this exclusion is genuinely automatic — no
-        oracle knowledge of which robot is degraded is required. This
-        follows the fault-detection-and-isolation framework of
-        Pasqualetti, Bicchi & Bullo (IEEE T-AC, 2012). The
-        ``manual_degradation`` flag is checked only as a demonstration
-        shortcut to force-exclude a robot immediately; the system
-        would converge to the same exclusion via reputation alone
-        after ~80 simulation steps.
+        Robots whose network reputation has fallen below TRUST_EXCLUDE_THRESHOLD аre excluded from gossip.
+        The reputation is built from OBSERVED disagreement trust.py
         """
         alive = [r for r in self.robots if r.is_alive]
         participants = [r for r in alive if self._trusted(r)]
@@ -189,12 +168,7 @@ class DistributedKalmanFilter:
     @staticmethod
     def _trusted(r):
         """
-        True iff the network currently trusts robot r to contribute
-        to the consensus. Decided from ``r.own_reputation`` (built
-        from observation in trust.py) against
-        ``TRUST_EXCLUDE_THRESHOLD``. The ``manual_degradation`` flag
-        is honoured for the demo shortcut but is NOT the primary
-        criterion.
+        True iff the network currently trusts robot r to contribute to the consensus. Decided from r.own_reputation (built from observation in trust.py)
         """
         if not r.is_alive:
             return False
@@ -207,7 +181,7 @@ class DistributedKalmanFilter:
 
     def network_belief(self):
         """
-        Mean μ and mean trace P across trusted robots with beliefs.
+        Mean mu and mean trace P across trusted robots with beliefs.
         Untrusted robots (low reputation OR manual_degradation) are
         excluded so their biased beliefs do not corrupt the consensus.
         """
@@ -219,51 +193,9 @@ class DistributedKalmanFilter:
         trs = np.array([np.trace(r.dkf_P) for r in with_b])
         return mus.mean(axis=0), trs.mean()
 
-    def estimate_disagreement(self):
-        """
-        σ = mean distance of each self-observed robot's DKF belief from the
-        current network-mean belief.
-
-        This is the real "how spread are independent estimates" metric.
-        It is nonzero even when gossip is still merging beliefs, because
-        each robot's belief reflects their own local observation PLUS what
-        gossip has partially propagated — and partial propagation leaves
-        residual disagreement.
-
-        If ALL beliefs have converged to exactly the same value (fully fused),
-        σ = 0 which is the correct answer: they have reached consensus.
-
-        The display shows σ > 0 during the approach phase and σ → 0 at
-        consensus — which is exactly the theoretical curve the project needs.
-        """
-        mus = [r.dkf_mu for r in self.robots
-               if self._trusted(r) and r.dkf_mu is not None]
-        if len(mus) < 2:
-            return 999.0
-        arr   = np.array(mus)
-        mean  = arr.mean(axis=0)
-        dists = np.linalg.norm(arr - mean, axis=1)
-        return float(dists.mean())   # mean distance from consensus point
-
     def estimate_disagreement_selfobs(self):
         """
-        σ from the INITIAL SEED BELIEFS of self-observed robots.
-
-        Why seed beliefs instead of current beliefs:
-        Gossip merges all beliefs toward the consensus — so after a few rounds
-        all robots have nearly identical dkf_mu, giving σ≈0 immediately.
-        That looks wrong on the display.
-
-        The seed belief (the FIRST peak estimate a robot made with its own
-        sensor, before any gossip) represents the robot's raw independent
-        observation. The spread of seed beliefs across robots is the true
-        measure of initial disagreement, and it only shrinks as robots move
-        closer to the source and their sensors agree.
-
-        This gives the correct theoretical picture:
-          • σ_seed starts high (robots far apart, noisy individual estimates)
-          • σ_seed falls as more robots reach the gas and observe closely
-          • consensus is declared when σ_seed < threshold for enough steps
+        sigma from the INITIAL SEED BELIEFS of self-observed robots
         """
         seeds = [r.dkf_seed_mu for r in self.robots
                  if self._trusted(r)
@@ -276,7 +208,7 @@ class DistributedKalmanFilter:
         return float(np.linalg.norm(arr - mean, axis=1).mean())
 
     def estimate_disagreement_all(self):
-        """σ across ALL robots with beliefs (for visualisation only)."""
+        """sigma across ALL robots with beliefs (for visualisation only)."""
         mus = [r.dkf_mu for r in self.robots
                if r.is_alive and r.dkf_mu is not None]
         if len(mus) < 2:

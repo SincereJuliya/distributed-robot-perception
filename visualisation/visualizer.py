@@ -1,14 +1,6 @@
 """
 visualisation/visualizer.py
 ---------------------------
-Minimalist academic UI inspired by Fig.4 of Facinelli/Fontanelli 2019.
-
-Design principles:
-  * One accent colour per mode (no rainbow)
-  * Whitespace over dividers
-  * Small, light typography
-  * Map dominates; right panel is a quiet sidebar
-  * Bottom bar is a hairline strip of controls
 """
 
 import sys
@@ -26,7 +18,7 @@ from simulation import Simulation
 from scenario   import ScenarioManager
 from agents     import Stage, STAGE_NAMES
 
-# ── Minimalist palette ──────────────────────────────────────────────────────
+#  Minimalist palette 
 BG     = "#ffffff"
 PANEL  = "#ffffff"
 HAIR   = "#e0e2e8"
@@ -55,7 +47,7 @@ class Visualizer:
         self._buttons  = []
         self._build_figure()
 
-    # ── Figure layout ─────────────────────────────────────────────────────────
+    #  Figure layout
 
     def _build_figure(self):
         self.fig = plt.figure(figsize=(14, 8.5), facecolor=BG)
@@ -90,7 +82,7 @@ class Visualizer:
                 ScenarioManager.FORMATION:    ACCENT_FORM}[
                     self.sim.scenario.active_key]
 
-    # ── Keyboard ──────────────────────────────────────────────────────────────
+    #  Keyboard 
 
     def _key(self, e):
         step = self.sim.step_count
@@ -133,7 +125,7 @@ class Visualizer:
             if e.inaxes is ax and x0 <= e.xdata <= x1 and y0 <= e.ydata <= y1:
                 cb(); return
 
-    # ── Map drawing ───────────────────────────────────────────────────────────
+    #  Map drawing
 
     def _draw_map(self):
         ax  = self.ax_map
@@ -166,11 +158,6 @@ class Visualizer:
                       origin="lower", cmap=GAS_CM, alpha=0.65,
                       vmin=0, vmax=1, zorder=1,
                       interpolation="bilinear", aspect=None)
-
-        if sim.obstacles:
-            for (x0, y0, x1, y1) in sim.obstacles:
-                ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0,
-                    facecolor="#e6e8ec", edgecolor=HAIR, lw=0.6, zorder=3))
 
         # Voronoi cells — always visible to show robots' regions of
         # responsibility. Slightly more transparent during LEAK/CONSENSUS
@@ -298,7 +285,7 @@ class Visualizer:
                   handletextpad=0.2, columnspacing=0.8,
                   bbox_to_anchor=(0.998, 0.005))
 
-    # ── Right sidebar ─────────────────────────────────────────────────────────
+    #  Right sidebar
 
     def _draw_panel(self):
         ax  = self.ax_panel
@@ -312,7 +299,7 @@ class Visualizer:
         acc = self._accent()
         y = 0.97
 
-        # ── PHASE CHIP ──────────────────────────────────────────────────────
+        #  PHASE CHIP 
         phase  = sim.scenario.phase.split("—")[0].strip().upper()
         ax.add_patch(FancyBboxPatch((0, y-0.04), 0.85, 0.038,
             boxstyle="round,pad=0.005,rounding_size=0.012",
@@ -327,7 +314,7 @@ class Visualizer:
             transform=ax.transAxes, va="center", ha="right")
         y -= 0.075
 
-        # ── METRICS ──────────────────────────────────────────────────────────
+        #  METRICS 
         lam2 = sim.scenario.lambda2_history[-1] if sim.scenario.lambda2_history else 0.0
         components = sim.comm_graph.num_components() if sim.comm_graph.A is not None else 1
         lam_col = OK if lam2 > 0.5 else (WARN if lam2 > 0.05 else DANGER)
@@ -370,7 +357,7 @@ class Visualizer:
 
         y -= 0.020
 
-        # ── ROBOTS ────────────────────────────────────────────────────────────
+        #  ROBOTS 
         ax.text(0.0, y, "ROBOTS",
             color=DIM, fontsize=7, fontweight="bold",
             transform=ax.transAxes, va="top", family="monospace")
@@ -409,7 +396,7 @@ class Visualizer:
 
         y -= 0.020
 
-        # ── EVENT LOG ─────────────────────────────────────────────────────────
+        #  EVENT LOG ─
         ax.text(0.0, y, "LOG",
             color=DIM, fontsize=7, fontweight="bold",
             transform=ax.transAxes, va="top", family="monospace")
@@ -433,7 +420,7 @@ class Visualizer:
             y -= 0.020
             if y < 0.02: break
 
-    # ── Bottom control strip ──────────────────────────────────────────────────
+    #  Bottom control strip 
 
     def _draw_controls(self):
         ax = self.ax_ctrl
@@ -519,7 +506,7 @@ class Visualizer:
                 ha="right", va="center", transform=ax.transAxes,
                 family="monospace")
 
-    # ── Animation ─────────────────────────────────────────────────────────────
+    #  Animation ─
 
     def _frame(self, _):
         self._buttons = []

@@ -1,11 +1,8 @@
 """
 environment/map.py
 ------------------
-Map geometry: bounds, optional obstacles, spawn helpers.
+Map geometry: bounds, spawn helpers
 
-Obstacles are rectangles (x0, y0, x1, y1). The "free space" is the map
-rectangle minus the union of all obstacle rectangles. Robots may only
-spawn / move inside the free space.
 """
 
 import random
@@ -19,13 +16,9 @@ import config
 def build_free_space():
     """
     Build the navigable free space as a shapely polygon.
-    Returns (free_space_polygon, obstacle_rect_list_or_None).
     """
     outer = box(0, 0, config.MAP_W, config.MAP_H)
-    if not config.USE_OBSTACLES or not config.OBSTACLES:
-        return outer, None
-    obs_union = unary_union([box(*r) for r in config.OBSTACLES])
-    return outer.difference(obs_union), list(config.OBSTACLES)
+    return outer
 
 
 def random_spawn_points(n, free_space, min_sep=80, margin=80, max_tries=15_000):
@@ -50,7 +43,7 @@ def random_leak_point(robots, free_space, margin=80, min_dist_to_robots=60):
     minimum-distance requirement from existing robots (so it doesn't spawn
     inside a robot's sensing circle).
 
-    Truly random — every cycle gives a fresh location.
+    Truly random - every cycle gives a fresh location.
     """
     alive = [r for r in robots if r.is_alive]
     for _ in range(200):

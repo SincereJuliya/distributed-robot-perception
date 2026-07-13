@@ -1,31 +1,20 @@
 """
 environment/pasquill_gifford.py
 -------------------------------
-Analytical Pasquill–Gifford Gaussian Plume model — direct
-implementation of Eq. (2) from Facinelli, Larcher, Brunelli, Fontanelli
-"Cooperative UAVs Gas Monitoring using Distributed Consensus"
+Analytical Pasquill-Gifford Gaussian Plume model
 
-The local concentration C(x, y, z) at distance (x, y, z) from a stack
-of height H_s is:
+The local concentration C(x, y, z) at distance (x, y, z) from a stack of height H_s is:
 
     C(x, y, z, H_s) = (Q / w)
                     * 1 / (2 * pi * sigma_y(x) * sigma_z(x))
                     * exp(-y^2 / (2 * sigma_y(x)^2))
                     * [ exp(-(z - H_s)^2 / (2 * sigma_z(x)^2))
-                      + exp(-(z + H_s)^2 / (2 * sigma_z(x)^2)) ]   (Eq. 2)
-
+                      + exp(-(z + H_s)^2 / (2 * sigma_z(x)^2)) ]
 with
     sigma_y(x) = c * x^d
     sigma_z(x) = a * x^b
 
-where (a, b, c, d) come from the Pasquill–Gifford stability table
-(Davidson 1990, also reproduced in Facinelli et al. § II-A).
-
-This module provides a stand-alone, vectorised evaluation of the
-plume on the simulator grid so it can be used as a drop-in
-replacement of the grid-based diffusion model. The same `GasField`
-interface is preserved: `step()`, `sample_at_px()`,
-`peak_in_radius_px()`, `add_source()`, `clear()`, etc.
+where (a, b, c, d) come from the Pasquill-Gifford stability table(Davidson 1990).
 """
 
 import numpy as np
@@ -34,9 +23,7 @@ import config
 
 # Pasquill stability table (a, b, c, d) coefficients per stability class.
 # Values from Davidson, J. Air & Waste Management Assoc. 40(8), 1990.
-# Class A = extremely unstable, F = stable. The default below ("D")
-# corresponds to neutral conditions and matches the figures in
-# Facinelli et al. 2019.
+# Class A = extremely unstable, F = stable
 PASQUILL_TABLE = {
     "A": {"a": 213.0, "b": 0.894, "c": 440.8, "d": 1.941},
     "B": {"a": 156.0, "b": 0.894, "c": 100.0, "d": 1.149},
@@ -49,7 +36,7 @@ PASQUILL_TABLE = {
 
 class PasquillGiffordPlume:
     """
-    Vectorised Pasquill–Gifford plume on the simulator grid.
+    Vectorised Pasquill-Gifford plume on the simulator grid.
 
     Coordinates are in pixels (the simulator native unit).
     The conversion factor PX_PER_M = 10 means 1 m = 10 px.
@@ -73,15 +60,14 @@ class PasquillGiffordPlume:
         ys = (np.arange(config.GRID_H) + 0.5) / config.GRID_H * config.MAP_H
         xs = (np.arange(config.GRID_W) + 0.5) / config.GRID_W * config.MAP_W
         self._gx_px, self._gy_px = np.meshgrid(xs, ys)         # (H, W)
-        # Receptor height z = stack height by default (UAV / ground
-        # level co-planar to source as in eq.3-4 of the paper)
+        # Receptor height z = stack height by default
         self.H_s_m = float(getattr(config, "STACK_HEIGHT_M", 3.0))
         self.z_m   = self.H_s_m
-        # Emission rate Q (mass per second). Scaled to give max ≈ 1
+        # Emission rate Q (mass per second). Scaled to give max ~ 1
         # in the grid for visual compatibility with the diffusion model
         self.Q     = float(getattr(config, "STACK_EMISSION", 5.0))
 
-    # ── Control ──────────────────────────────────────────────────────────────
+    #  Control 
 
     def add_source(self, source_px):
         self.sources.append(tuple(source_px))
@@ -97,20 +83,21 @@ class PasquillGiffordPlume:
     def emitting(self):
         return len(self.sources) > 0
 
-    # ── Pasquill σ_y, σ_z as a function of along-wind distance x ─────────────
+    #  Pasquill sigma_y, sigma_z as a function of along-wind distance x 
 
     def _sigmas(self, x_m):
-        """σ_y(x) = c·x^d, σ_z(x) = a·x^b. x_m in metres, ≥ 0."""
+        """sigma_y(x) = c*x^d, sigma_z(x) = a*x^b. x_m in metres, >= 0."""
         x_safe = np.maximum(x_m, 1.0)         # avoid x = 0
         c, d   = self.coeff["c"], self.coeff["d"]
         a, b   = self.coeff["a"], self.coeff["b"]
-        # Divide by 100 to keep σ in a reasonable range for our 90 m map
+        # Davidson coefficients give sigma in metres at industrial (km)
+        # scales; divide by 100 to fit the 90 m map. This rescales the
+        # plume spatially but preserves the Gaussian shape.
         sigma_y = (c * np.power(x_safe, d)) / 100.0
         sigma_z = (a * np.power(x_safe, b)) / 100.0
         return sigma_y, sigma_z
 
-    # ── Concentration at a single point — Eq. (2) and (3) of the paper ──────
-
+    #  Concentration at a single point
     def _concentration_pt(self, source_px, x_px, y_px, z_m=None):
         """
         Compute C at receptor (x_px, y_px) for one source at source_px.
@@ -129,7 +116,7 @@ class PasquillGiffordPlume:
         w = self.wind
         w_norm = np.linalg.norm(w)
         if w_norm < 1e-6:
-            # No wind → use raw axes
+            # No wind -> use raw axes
             xr = dx_px
             yr = dy_px
         else:
@@ -141,7 +128,7 @@ class PasquillGiffordPlume:
         x_m = xr / self.PX_PER_M
         y_m = yr / self.PX_PER_M
 
-        # Upwind (x < 0) → no concentration in the Gaussian-plume model
+        # Upwind (x < 0) -> no concentration in the Gaussian-plume model
         # (the plume is advected downwind from the stack)
         upwind = x_m < 0
 
@@ -150,7 +137,7 @@ class PasquillGiffordPlume:
         # Wind speed in m/s (norm of wind vector, scaled for realism)
         w_speed = max(0.1, w_norm * 10.0)
 
-        # Eq. (2) of Facinelli/Fontanelli 2019
+        # Gaussian-plume formula
         prefactor = (self.Q / w_speed) * (1.0 /
                     (2.0 * np.pi * sigma_y * sigma_z))
         gauss_y   = np.exp(-(y_m ** 2) / (2.0 * sigma_y ** 2))
@@ -164,8 +151,7 @@ class PasquillGiffordPlume:
         C = np.where(upwind, 0.0, C)
         return C
 
-    # ── Per-step grid update ─────────────────────────────────────────────────
-
+    #  Per-step grid update 
     def step(self):
         """
         Recompute the analytical plume on the whole grid.
@@ -181,13 +167,13 @@ class PasquillGiffordPlume:
             self.grid = np.where(self.grid < 1e-4, 0.0, self.grid)
             return
 
-        # Compute analytical field from all sources (linear superposition)
+        # Compute analytical field from all sources
         steady = np.zeros_like(self.grid)
         for src in self.sources:
             steady += self._concentration_pt(
                 src, self._gx_px, self._gy_px)
 
-        # Normalise so the maximum is around 1 — keeps the colormap
+        # Normalise so the maximum is around 1 - keeps the colormap
         # consistent with the diffusion model
         m = steady.max()
         if m > 1e-9:
@@ -208,7 +194,7 @@ class PasquillGiffordPlume:
                                 np.random.uniform(-0.04, 0.04, 2),
                                 -0.3, 0.3)
 
-    # ── Queries — same interface as GasField ─────────────────────────────────
+    #  Queries - same interface as GasField 
 
     def _px_to_cell(self, x, y):
         cx = int(np.clip(x / config.MAP_W * config.GRID_W,

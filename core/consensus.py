@@ -7,8 +7,8 @@ Standard pairwise gossip (Boyd et al. 2006, Olfati-Saber 2007):
 each round, a random alive robot picks a random alive neighbour and the pair
 averages their position-estimate dictionaries with weights = sensor_quality.
 
-Asymptotic convergence speed is governed by the algebraic connectivity λ₂
-of the comm-graph Laplacian (see core/graph_metrics.py).
+Asymptotic convergence speed is governed by the algebraic connectivity lambda_2
+of the comm-graph Laplacian (core/graph_metrics.py)
 """
 
 import numpy as np

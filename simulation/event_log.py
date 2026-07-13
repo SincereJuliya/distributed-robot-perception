@@ -4,8 +4,8 @@ simulation/event_log.py
 Structured event logging for the simulation.
 
 Two outputs:
-  • In-memory ring buffer  — last N events for on-screen display
-  • Files                  — logs/sim_<TIMESTAMP>.log (text)
+  In-memory ring buffer  — last N events for on-screen display
+  Files                  — logs/sim_<TIMESTAMP>.log (text)
                               logs/sim_<TIMESTAMP>.csv (numerical)
 
 Usage:
@@ -45,8 +45,6 @@ class EventLog:
             "agreed_x", "agreed_y",
         ])
 
-    # ── Public API ────────────────────────────────────────────────────────────
-
     def info(self, step, tag, message, severity="info"):
         """Record a human-readable event. Shown on screen + written to text log."""
         record = {"step": step, "tag": tag, "msg": message, "sev": severity}
@@ -61,7 +59,7 @@ class EventLog:
         self._csv_w.writerow([step, phase, mode, robots_alive,
                               sigma, lambda2, leak_x, leak_y, ag_x, ag_y])
 
-    # ── Convenience helpers ───────────────────────────────────────────────────
+    #  Convenience helpers
 
     def phase_transition(self, step, frm, to):
         self.info(step, "PHASE", f"{frm} → {to}", severity="event")

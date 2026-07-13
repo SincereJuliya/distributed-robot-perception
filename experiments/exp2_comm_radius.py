@@ -1,18 +1,17 @@
 """
 experiments/exp2_comm_radius.py
------------------------------------
-Experiment 2 — Effect of communication radius r_c.
+-------------------------------
+Experiment 2 - Effect of communication radius r_c
 
-Design: paired-seeds sweep. The SAME seeds 3000..3000+N-1 are replayed
-under every r_c value, so the variance attributable to the leak source
-position cancels out when comparing radii (block design).
+Design: paired-seeds sweep. The SAME seeds 3000..3000+N-1 are replayed under every r_c value, so the variance attributable to the leak source
+position cancels out when comparing radii (block design)
 
-Sweep: r_c ∈ {200, 250, 300, 350, 500} px.
-N: --runs seeds per radius (default 15).
+Sweep: r_c in {200, 250, 300, 350, 500} px
+N: --runs seeds per radius (default 15)
 
 Outputs:
-  results/exp2_comm_radius.csv    — one row per (seed, r_c)
-  results/exp2_summary.txt        — per-radius table with 95% CIs
+  results/exp2_comm_radius.csv    - one row per (seed, r_c)
+  results/exp2_summary.txt        - per-radius table, mean +- std
 """
 
 import argparse
@@ -23,7 +22,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from runner import run_one_cycle, FIELDS
-from stats import summarise, fmt_ci
+from stats import summarise, fmt_pm
 
 
 def main():
@@ -46,40 +45,43 @@ def main():
                                 exploration="lloyd",
                                 max_steps=args.max_steps)
             rows.append(rec)
-            ok = "✓" if rec["completed"] else "✗"
+            ok = "OK" if rec["completed"] else "--"
             err = f"{rec['err']:.1f}" if rec["err"] is not None else " - "
             print(f"  rc={rc:3d}  seed={seed}  {ok}  "
                   f"err={err:>5} px  total={rec['total_steps']}  "
-                  f"λ₂̄={rec['lam2_mean']}")
+                  f"lam2={rec['lam2_mean']:.3f}" if rec['lam2_mean'] is not None else "lam2=n/a")
 
     # CSV
     csv_path = os.path.join(args.out_dir, "exp2_comm_radius.csv")
     with open(csv_path, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS); w.writeheader(); w.writerows(rows)
-    print(f"\n✓ CSV → {csv_path}")
+    print(f"\nCSV -> {csv_path}")
 
-    # Per-radius summary
+    # Per-radius summary (mean +- std, matching the report)
     lines = [
-        f"Experiment 2 — Communication radius sweep",
+        "Experiment 2 - Communication radius sweep",
         f"  seeds = {args.runs} (paired across radii)",
         "",
-        f"{'r_c':>5} {'done':>6} {'err mean [CI]':<22} {'total mean [CI]':<22} "
-        f"{'λ₂̄ mean [CI]':<22} {'λ₂=0 %':>8}",
-        "-" * 90,
+        f"{'r_c':>5} {'done':>6} {'err mean +- std':<20} "
+        f"{'total mean +- std':<22} {'lam2 mean +- std':<20} {'lam2=0 %':>9}",
+        "-" * 88,
     ]
     for rc in args.radii:
         sub  = [r for r in rows if r["comm_radius"] == rc]
         done = [r for r in sub if r["completed"]]
-        s_err  = summarise([r["err"]         for r in done])
-        s_tot  = summarise([r["total_steps"] for r in done])
-        s_lam  = summarise([r["lam2_mean"]   for r in done])
+        s_err  = summarise([r["err"]           for r in done])
+        s_tot  = summarise([r["total_steps"]   for r in done])
+        s_lam  = summarise([r["lam2_mean"]     for r in done])
         s_zero = summarise([r["lam2_zero_pct"] for r in done])
+        if s_err["n"] == 0:
+            lines.append(f"{rc:>5} {len(done)}/{len(sub):<3}  (no completed runs)")
+            continue
         lines.append(
             f"{rc:>5} {len(done)}/{len(sub):<3} "
-            f"{fmt_ci(s_err['mean'], s_err['ci95_lo'], s_err['ci95_hi']):<22} "
-            f"{fmt_ci(s_tot['mean'], s_tot['ci95_lo'], s_tot['ci95_hi'], 0):<22} "
-            f"{fmt_ci(s_lam['mean'], s_lam['ci95_lo'], s_lam['ci95_hi'], 3):<22} "
-            f"{s_zero['mean']:>7.1f}%"
+            f"{fmt_pm(s_err['mean'], s_err['std']):<20} "
+            f"{fmt_pm(s_tot['mean'], s_tot['std'], 0):<22} "
+            f"{fmt_pm(s_lam['mean'], s_lam['std'], 3):<20} "
+            f"{s_zero['mean']:>8.1f}%"
         )
     txt = "\n".join(lines)
     print("\n" + txt)
