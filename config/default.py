@@ -28,18 +28,17 @@ GAS_EMIT_RATE   = 0.92
 GAS_DIFFUSION   = 0.45      # Dc
 GAS_DECAY       = 0.003     # kappa
 WIND_VEC        = (0.06, 0.02)
-DETECT_THRESH   = 0.005     # normalised units; tuned so detection happens
-                            # within a reasonable patrol time
+DETECT_THRESH   = 0.005     
 
 # Sensor noise std: sigma(d) = sigma_0 * (1 + (d/rho)^2)
-# sigma_0 in normalised units (datasheet noise floor / max concentration)
+# sigma_0 in normalised units (noise floor / max concentration)
 MINIPID2_SIGMA_0 = 0.01
 
 # Robots (homogeneous ground team)
 NUM_ROBOTS      = 5
 ROBOT_SPEED     = 2.0        # v_max (px/step)
 SENSE_RADIUS    = 70         # rho (px)
-COMM_RADIUS     = 500        # rc (px); default for Mode 1, swept in Exp. 2
+COMM_RADIUS     = 250        # rc (px)
 
 SENSOR_QUALITY  = 1.0        # base gossip weight q
 DEGRADE_RATE    = 0.006      # exposure per step while in gas
@@ -59,12 +58,12 @@ DKF_PROCESS_NOISE = 25.0     # q in P <- P + qI
 # Lloyd-Voronoi
 LLOYD_ALPHA     = 0.08       # centroid smoothing
 
-# Exploration strategy: "lloyd" (default) or "random_walk"
+# Exploration strategy: "lloyd" or "random_walk"
 EXPLORATION_STRATEGY = "lloyd"
 
 # Consensus detection
 CONSENSUS_THRESH       = 25   # Theta (px)
-CONSENSUS_STABLE_STEPS = 30   # consecutive steps below Theta before REPORTED
+CONSENSUS_STABLE_STEPS = 30   # consecutive steps before REPORTED
 
 # Scenario timing
 MONITOR_STEPS = 200          # patrol time before next automatic leak
@@ -78,12 +77,21 @@ TRUST_DISAGREE_PX   = 60      # d_theta, disagreement scale (px)
 TRUST_EXCLUDE_THRESHOLD = 0.40  # tau_exc; below this, excluded from gossip
                                 # and from the final network belief
 
+# # Formation control (Mode 3)
+# FORMATION_SHAPE   = "circle"    # "circle", "line", "v"
+# FORMATION_RADIUS  = 90          # circle / V
+# FORMATION_SPACING = 50          # line
+# FORMATION_GAIN    = 0.2         # consensus convergence rate 
+# LEADER_PATH_TYPE  = "random_waypoints"  # "circle", "random_waypoints"
 # Formation control (Mode 3)
 FORMATION_SHAPE   = "circle"    # "circle", "line", "v"
 FORMATION_RADIUS  = 90          # circle / V
 FORMATION_SPACING = 50          # line
-FORMATION_GAIN    = 0.2         # consensus convergence rate (Mode 3)
+FORMATION_GAIN        = 0.35    # k_f, Laplacian consensus gain (Mode 3)
+FORMATION_ANCHOR_GAIN = 0.35    # k_c, anchor to the leader path
+FORMATION_ROT_RATE    = 0.008   # omega for the rotating circle; omega*RADIUS < speed
 LEADER_PATH_TYPE  = "random_waypoints"  # "circle", "lissajous", "random_waypoints"
+
 
 # Animation
 FPS       = 30

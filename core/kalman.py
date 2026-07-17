@@ -89,7 +89,7 @@ class DistributedKalmanFilter:
 
     def fuse_pairwise(self, ri, rj, trust_weights=None):
         """
-        Two-robot belief fusion (Olfati-Saber 2007, information form).
+        Two-robot belief fusion
 
         Omega_f = w_i*Omega_i + w_j*Omega_j
         xi_f = w_i*xi_i + w_j*xi_j

@@ -145,7 +145,7 @@ class PasquillGiffordPlume:
                             (2.0 * sigma_z ** 2)) +
                      np.exp(-((z_m + self.H_s_m) ** 2) /
                             (2.0 * sigma_z ** 2)))
-
+        # длинный хвост
         C = prefactor * gauss_y * gauss_z
         # Mask out upwind regions (no diffusion against wind)
         C = np.where(upwind, 0.0, C)

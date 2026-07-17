@@ -1,0 +1,12 @@
+step,phase,mode,robots_alive,sigma,lambda2,leak_x,leak_y,agreed_x,agreed_y
+0,MONITORING,Hazard Localization,5,,0.0,,,,
+1,MONITORING,Hazard Localization,5,,0.0,,,,
+2,MONITORING,Hazard Localization,5,,0.0,,,,
+3,MONITORING,Hazard Localization,5,,0.0,,,,
+4,MONITORING,Hazard Localization,5,,0.0,,,,
+5,MONITORING,Hazard Localization,5,,0.0,,,,
+6,MONITORING,Hazard Localization,5,,0.0,,,,
+7,MONITORING,Hazard Localization,5,,0.0,,,,
+8,MONITORING,Hazard Localization,5,,0.0,,,,
+9,MONITORING,Hazard Localization,5,,0.0,,,,
+10,MONITORING,Hazard Localization,5,,0.0,,,,
